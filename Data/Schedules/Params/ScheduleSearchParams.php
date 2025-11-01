@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Data\ApiParams\Data\Schedules;
+namespace App\Data\ApiParams\Data\Schedules\Params;
 
 
 use App\Data\ApiParams\Rules\ValidateResourceRef;
@@ -21,7 +21,8 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript]
 #[MergeValidationRules]
-class ScheduleList extends Data
+#[OA\Schema(schema: 'ScheduleSearchParams')]
+class ScheduleSearchParams extends Data
 {
     public function __construct(
 

@@ -4,4 +4,4 @@ Allows shared php typing/validation for api inputs between the core code and tes
 
 ## Scheduling
 
-Has params to create edit,list schedules, and has self-contained validation rules
+Has params to create,edit,list schedules, and has self-contained validation rules

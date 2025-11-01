@@ -3,19 +3,24 @@
 namespace App\Data\ApiParams\Data\Schedules;
 
 
+use App\Data\ApiParams\Common\HexbatchUuid;
 use App\Data\ApiParams\Rules\ValidateCronString;
 use App\Data\ApiParams\Rules\ValidateTimeZone;
 use App\Helpers\AttributeConstants;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use OpenApi\Attributes as OA;
+use Spatie\LaravelData\Attributes\AutoWhenLoadedLazy;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
 use Spatie\LaravelData\Attributes\Validation\Max;
 use Spatie\LaravelData\Attributes\Validation\Min;
 use Spatie\LaravelData\Attributes\Validation\Regex;
+use Spatie\LaravelData\Attributes\Validation\Uuid;
 use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Attributes\WithTransformer;
 use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Lazy;
 use Spatie\LaravelData\Optional;
 use Spatie\LaravelData\Support\Validation\ValidationContext;
 use Spatie\LaravelData\Transformers\DateTimeInterfaceTransformer;
@@ -23,8 +28,12 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript]
 #[MergeValidationRules]
-class ScheduleParams extends Data
+#[OA\Schema(schema: 'Schedule')]
+class Schedule extends Data
 {
+    /**
+     * @param Lazy|Collection<int, ScheduleSpan> $time_spans
+     */
     public function __construct(
 
         #[Max(30),Min(3),Regex('/^\p{L}[\p{L}0-9_]{2,29}$/')]
@@ -52,6 +61,14 @@ class ScheduleParams extends Data
         #[OA\Property(title: 'Cron period length', description: 'The amount of seconds after each cron match',minimum: 1)]
         #[Max(60*60*25*366),Min(1)]
         public null|Optional|int $bound_period_length ,
+
+        #[Uuid]
+        #[OA\Property(title: 'Schedule uuid',type: HexbatchUuid::class)]
+        public Optional|string $uuid,
+
+        #[AutoWhenLoadedLazy]
+        #[OA\Property( title: 'Time spans',description: "the generated time spans",items:  new OA\Items(type: ScheduleSpan::class))]
+        public Collection|Lazy $time_spans
 
     ) {
     }
