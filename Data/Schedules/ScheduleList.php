@@ -26,23 +26,27 @@ class ScheduleList extends Data
 
         #[Max(40),Min(3)]
         #[OA\Property(title: 'Namespace',description: 'The schedule is in this namespace. Can be uuid or name.')]
-        protected null|string|Optional $namespace_ref = null,
+        public null|string|Optional $namespace_ref = null,
 
 
         #[OA\Property( title: 'Scheduled before',description: "Iso 8601 datetime, to see if the schedule is before this", format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]
         #[WithCast(DateTimeInterfaceCast::class, format: DATE_ATOM)]
         #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM, setTimeZone: AttributeConstants::OUTPUT_TIMEZONE)]
-        protected Optional|Carbon $before ,
+        public Optional|Carbon $before ,
 
         #[OA\Property( title: 'Scheduled before',description: "Iso 8601 datetime, to see if the schedule is after this", format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]
         #[WithCast(DateTimeInterfaceCast::class, format: DATE_ATOM)]
         #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM, setTimeZone: AttributeConstants::OUTPUT_TIMEZONE)]
-        protected Optional|Carbon $after ,
+        public Optional|Carbon $after ,
 
         #[OA\Property( title: 'Scheduled during',description: "Iso 8601 datetime, to see if the schedule includes this", format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]
         #[WithCast(DateTimeInterfaceCast::class, format: DATE_ATOM)]
         #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM, setTimeZone: AttributeConstants::OUTPUT_TIMEZONE)]
-        protected Optional|Carbon $during ,
+        public Optional|Carbon $during ,
+
+
+        #[OA\Property( title: 'Cursor')]
+        public Optional|null|string $cursor
 
     ) {
     }
