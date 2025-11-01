@@ -19,8 +19,9 @@ use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Optional;
 use Spatie\LaravelData\Support\Validation\ValidationContext;
 use Spatie\LaravelData\Transformers\DateTimeInterfaceTransformer;
+use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
-
+#[TypeScript]
 #[MergeValidationRules]
 class ScheduleParams extends Data
 {
