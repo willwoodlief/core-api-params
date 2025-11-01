@@ -3,6 +3,7 @@
 namespace App\Data\ApiParams\Data\Schedules\Responses;
 
 
+use App\Data\ApiParams\Common\IResponse;
 use App\Data\ApiParams\Data\Schedules\Schedule;
 use Illuminate\Support\Collection;
 use OpenApi\Attributes as OA;
@@ -12,7 +13,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript]
 #[OA\Schema(schema: 'ScheduleList')]
-class ScheduleList extends Data
+class ScheduleList extends Data implements IResponse
 {
     public function __construct(
 

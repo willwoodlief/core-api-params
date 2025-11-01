@@ -4,6 +4,7 @@ namespace App\Data\ApiParams\Data\Schedules;
 
 
 use App\Data\ApiParams\Common\HexbatchUuid;
+use App\Data\ApiParams\Common\IResponse;
 use App\Data\ApiParams\Rules\ValidateCronString;
 use App\Data\ApiParams\Rules\ValidateTimeZone;
 use App\Helpers\AttributeConstants;
@@ -29,7 +30,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 #[TypeScript]
 #[MergeValidationRules]
 #[OA\Schema(schema: 'Schedule')]
-class Schedule extends Data
+class Schedule extends Data implements IResponse
 {
     /**
      * @param Lazy|Collection<int, ScheduleSpan> $time_spans
