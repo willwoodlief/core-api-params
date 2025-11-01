@@ -34,21 +34,21 @@ class ScheduleSearchParams extends Data
         #[OA\Property( title: 'Scheduled before',description: "Iso 8601 datetime, to see if the schedule is before this", format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]
         #[WithCast(DateTimeInterfaceCast::class, format: DATE_ATOM)]
         #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM, setTimeZone: AttributeConstants::OUTPUT_TIMEZONE)]
-        public Optional|Carbon $before ,
+        public null|Optional|Carbon $before  = null,
 
         #[OA\Property( title: 'Scheduled before',description: "Iso 8601 datetime, to see if the schedule is after this", format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]
         #[WithCast(DateTimeInterfaceCast::class, format: DATE_ATOM)]
         #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM, setTimeZone: AttributeConstants::OUTPUT_TIMEZONE)]
-        public Optional|Carbon $after ,
+        public null|Optional|Carbon $after = null,
 
         #[OA\Property( title: 'Scheduled during',description: "Iso 8601 datetime, to see if the schedule includes this", format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]
         #[WithCast(DateTimeInterfaceCast::class, format: DATE_ATOM)]
         #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM, setTimeZone: AttributeConstants::OUTPUT_TIMEZONE)]
-        public Optional|Carbon $during ,
+        public null|Optional|Carbon $during = null,
 
 
         #[OA\Property( title: 'Cursor')]
-        public Optional|null|string $cursor
+        public Optional|null|string $cursor = null
 
     ) {
     }
