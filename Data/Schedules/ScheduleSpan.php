@@ -26,16 +26,17 @@ class ScheduleSpan extends Data
         #[OA\Property( title: 'Starting at',description: "Optional Iso 8601 datetime", format: 'datetime',example: "2025-01-25T15:00:59-06:00",nullable: true)]
         #[WithCast(DateTimeInterfaceCast::class, format: DATE_ATOM)]
         #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM, setTimeZone: AttributeConstants::OUTPUT_TIMEZONE)]
-        public null|Optional|Carbon $start,
+        public null|Optional|Carbon $start = null,
 
         #[OA\Property( title: 'Stopping at',description: "Optional Iso 8601 datetime", format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]
         #[WithCast(DateTimeInterfaceCast::class, format: DATE_ATOM)]
         #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM, setTimeZone: AttributeConstants::OUTPUT_TIMEZONE)]
-        public null|Optional|Carbon $stop,
+        public null|Optional|Carbon $stop = null,
 
 
 
     ) {
     }
+
 
 }

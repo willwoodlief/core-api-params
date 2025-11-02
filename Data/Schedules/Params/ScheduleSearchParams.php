@@ -6,6 +6,9 @@ namespace App\Data\ApiParams\Data\Schedules\Params;
 use App\Data\ApiParams\Rules\ValidateResourceRef;
 use App\Helpers\AttributeConstants;
 use Carbon\Carbon;
+use Carbon\Exceptions\InvalidFormatException;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
 use Spatie\LaravelData\Attributes\Validation\Max;
@@ -58,5 +61,33 @@ class ScheduleSearchParams extends Data
         return [
             'namespace_ref' => new ValidateResourceRef()
         ];
+    }
+
+
+    public static function fromRequest(Request $what): ScheduleSearchParams
+    {
+        $info = $what->request->all();
+
+
+        foreach (['before','after','during'] as $field) {
+            if (($info[$field]??null) !== null)
+            {
+                try {
+                    $info[$field] = Carbon::parse($info[$field])->toIso8601String();
+                } catch (InvalidFormatException $e) {
+                    throw ValidationException::withMessages([
+                        $field => "Cannot convert $field time to iso8601: ". $e->getMessage(),
+                    ]);
+                }
+            }
+        }
+
+
+        ScheduleSearchParams::validate($info);
+
+        return  ScheduleSearchParams::factory()
+            ->withoutOptionalValues()
+            ->from($info);
+
     }
 }

@@ -68,11 +68,11 @@ class Schedule extends Data implements IResponse
 
         #[Uuid]
         #[OA\Property(title: 'Schedule uuid',type: HexbatchUuid::class)]
-        public Optional|string $uuid,
+        public Optional|string|null $uuid = null,
 
         #[AutoWhenLoadedLazy]
         #[OA\Property( title: 'Time spans',description: "the generated time spans",items:  new OA\Items(type: ScheduleSpan::class))]
-        public Optional|Collection|Lazy $time_spans
+        public Optional|Collection|Lazy|null $time_spans = null
 
     ) {
     }
@@ -111,7 +111,12 @@ class Schedule extends Data implements IResponse
                 ]);
             }
         }
-        return self::validateAndCreate($info);
+
+        Schedule::validate($info);
+
+        return  Schedule::factory()
+            ->withoutOptionalValues()
+            ->from($info);
 
     }
 }
