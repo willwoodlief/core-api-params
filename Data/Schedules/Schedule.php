@@ -9,7 +9,10 @@ use App\Data\ApiParams\Rules\ValidateCronString;
 use App\Data\ApiParams\Rules\ValidateTimeZone;
 use App\Helpers\AttributeConstants;
 use Carbon\Carbon;
+use Carbon\Exceptions\InvalidFormatException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Validation\ValidationException;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\AutoWhenLoadedLazy;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
@@ -33,7 +36,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class Schedule extends Data implements IResponse
 {
     /**
-     * @param Lazy|Collection<int, ScheduleSpan> $time_spans
+     * @param Optional|Lazy|Collection<int, ScheduleSpan> $time_spans
      */
     public function __construct(
 
@@ -69,7 +72,7 @@ class Schedule extends Data implements IResponse
 
         #[AutoWhenLoadedLazy]
         #[OA\Property( title: 'Time spans',description: "the generated time spans",items:  new OA\Items(type: ScheduleSpan::class))]
-        public Collection|Lazy $time_spans
+        public Optional|Collection|Lazy $time_spans
 
     ) {
     }
@@ -80,5 +83,35 @@ class Schedule extends Data implements IResponse
             'bound_cron_timezone' => new ValidateTimeZone(),
             'bound_cron' => new ValidateCronString(),
         ];
+    }
+
+    public static function fromRequest(Request $what): Schedule
+    {
+        $info = $what->request->all();
+
+
+        if (($info['bound_start']??null) !== null)
+        {
+            try {
+                $info['bound_start'] = Carbon::parse($info['bound_start'])->toIso8601String();
+            } catch (InvalidFormatException $e) {
+                throw ValidationException::withMessages([
+                    'bound_start' => "Cannot convert bound start time to iso8601: ". $e->getMessage(),
+                ]);
+            }
+        }
+
+        if (($info['bound_stop']??null) !== null)
+        {
+            try {
+                $info['bound_stop'] = Carbon::parse($info['bound_stop'])->toIso8601String();
+            } catch (InvalidFormatException $e) {
+                throw ValidationException::withMessages([
+                    'bound_stop' => "Cannot convert bound stop time to iso8601: ". $e->getMessage(),
+                ]);
+            }
+        }
+        return self::validateAndCreate($info);
+
     }
 }
