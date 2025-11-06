@@ -8,6 +8,7 @@ use App\Data\ApiParams\Common\IResponse;
 use App\Data\ApiParams\Rules\ValidateCronString;
 use App\Data\ApiParams\Rules\ValidateTimeZone;
 use App\Helpers\AttributeConstants;
+use App\OpenApi\Common\HexbatchCron;
 use Carbon\Carbon;
 use Carbon\Exceptions\InvalidFormatException;
 use Illuminate\Http\Request;
@@ -36,7 +37,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class Schedule extends Data implements IResponse
 {
     /**
-     * @param Optional|Lazy|Collection<int, ScheduleSpan> $time_spans
+     * @param Optional|Collection|Lazy|null<int, ScheduleSpan> $time_spans
      */
     public function __construct(
 
@@ -49,12 +50,12 @@ class Schedule extends Data implements IResponse
         #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM, setTimeZone: AttributeConstants::OUTPUT_TIMEZONE)]
         public null|Optional|Carbon $bound_start,
 
-        #[OA\Property( title: 'Stopping at',description: "Optional Iso 8601 datetime", format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]
+        #[OA\Property( title: 'Stopping at',description: "Optional Iso 8601 datetime", type: 'string', format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]
         #[WithCast(DateTimeInterfaceCast::class, format: DATE_ATOM)]
         #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM, setTimeZone: AttributeConstants::OUTPUT_TIMEZONE)]
         public null|Optional|Carbon $bound_stop,
 
-        #[OA\Property(title: 'Cron', description: 'Optional linux cronjob tab string', type: '#/components/schemas/HexbatchCron')]
+        #[OA\Property(title: 'Cron', description: 'Optional linux cronjob tab string', type: HexbatchCron::class)]
         public null|Optional|string $bound_cron,
 
 
@@ -71,7 +72,7 @@ class Schedule extends Data implements IResponse
         public Optional|string|null $uuid = null,
 
         #[AutoWhenLoadedLazy]
-        #[OA\Property( title: 'Time spans',description: "the generated time spans",items:  new OA\Items(type: ScheduleSpan::class))]
+        #[OA\Property( title: 'Time spans', description: "the generated time spans", type: 'array', items: new OA\Items(type: ScheduleSpan::class))]
         public Optional|Collection|Lazy|null $time_spans = null
 
     ) {
