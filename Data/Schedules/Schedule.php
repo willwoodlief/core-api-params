@@ -3,12 +3,14 @@
 namespace App\Data\ApiParams\Data\Schedules;
 
 
+
 use App\Data\ApiParams\Common\HexbatchUuid;
 use App\Data\ApiParams\Common\IResponse;
+use App\Data\ApiParams\OpenApi\Common\HexbatchCron;
+use App\Data\ApiParams\OpenApi\Common\HexbatchResourceName;
 use App\Data\ApiParams\Rules\ValidateCronString;
 use App\Data\ApiParams\Rules\ValidateTimeZone;
 use App\Helpers\AttributeConstants;
-use App\OpenApi\Common\HexbatchCron;
 use Carbon\Carbon;
 use Carbon\Exceptions\InvalidFormatException;
 use Illuminate\Http\Request;
@@ -42,7 +44,7 @@ class Schedule extends Data implements IResponse
     public function __construct(
 
         #[Max(30),Min(3),Regex('/^\p{L}[\p{L}0-9_]{2,29}$/')]
-        #[OA\Property(ref: '#/components/schemas/HexbatchResourceName',title: 'Name', description: 'Name of the bound')]
+        #[OA\Property(title: 'Name', description: 'Name of the bound',type: HexbatchResourceName::class)]
         public string|Optional $bound_name,
 
         #[OA\Property( title: 'Starting at',description: "Optional Iso 8601 datetime", format: 'datetime',example: "2025-01-25T15:00:59-06:00",nullable: true)]

@@ -2,8 +2,10 @@
 
 namespace App\Data\ApiParams\Data\Namespaces;
 
+use App\Data\ApiParams\OpenApi\Common\HexbatchResourceName;
 use App\Models\UserNamespace;
 use Carbon\Carbon;
+use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\Validation\Max;
 use Spatie\LaravelData\Attributes\Validation\Uuid;
 use Spatie\LaravelData\Attributes\WithCast;
@@ -13,7 +15,6 @@ use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Optional;
 use Spatie\LaravelData\Transformers\DateTimeInterfaceTransformer;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
-use OpenApi\Attributes as OA;
 
 #[TypeScript]
 #[OA\Schema(schema: 'Namespace')]
@@ -26,7 +27,7 @@ class UserNamespaceData extends Data
         #[Uuid]
         public string $uuid,
 
-        #[OA\Property( title:"Name")]
+        #[OA\Property( title:"Name",type: HexbatchResourceName::class)]
         #[Max(30)]
         public string $namespace_name,
 
