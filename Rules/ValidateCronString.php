@@ -2,7 +2,6 @@
 
 namespace App\Data\ApiParams\Rules;
 
-use Carbon\Exceptions\InvalidTimeZoneException;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 use InvalidArgumentException;

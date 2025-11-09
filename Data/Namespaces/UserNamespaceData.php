@@ -23,9 +23,11 @@ class UserNamespaceData extends Data
 
     public function __construct(
 
+        public null|int|Optional $id,
+
         #[OA\Property( title:"Uuid",format: 'uuid')]
         #[Uuid]
-        public string $uuid,
+        public string $ref_uuid,
 
         #[OA\Property( title:"Name",type: HexbatchResourceName::class)]
         #[Max(30)]
@@ -74,23 +76,29 @@ class UserNamespaceData extends Data
 
         if ($namespace->home_set) {
             return self::from(
-                uuid: $namespace->ref_uuid,
-                namespace_name: $namespace->namespace_name,
-                namespace_public_key: $namespace->namespace_public_key,
-                is_system: $namespace->is_system,created_at: $namespace->created_at,
-                updated_at: $namespace->updated_at,
-                home_set_uuid: $namespace->home_set->ref_uuid,
-                public_uuid: $namespace->public_element->ref_uuid,
-                private_uuid: $namespace->private_element->ref_uuid,
-                type_uuid: $namespace->namespace_base_type->ref_uuid,
+                [
+                'ref_uuid'=> $namespace->ref_uuid,
+                'namespace_name'=> $namespace->namespace_name,
+                'namespace_public_key'=> $namespace->namespace_public_key,
+                'is_system'=> $namespace->is_system,
+                'created_at'=> Carbon::parse($namespace->created_at),
+                'updated_at'=> Carbon::parse($namespace->updated_at),
+                'home_set_uuid'=> $namespace->home_set->ref_uuid,
+                'public_uuid'=> $namespace->public_element->ref_uuid,
+                'private_uuid'=> $namespace->private_element->ref_uuid,
+                'type_uuid'=> $namespace->namespace_base_type->ref_uuid
+                ]
             );
         } else {
             return self::from(
-                uuid: $namespace->ref_uuid,
-                namespace_name: $namespace->namespace_name,
-                namespace_public_key: $namespace->namespace_public_key,
-                is_system: $namespace->is_system,created_at: $namespace->created_at,
-                updated_at: $namespace->updated_at
+                [
+                'ref_uuid'=> $namespace->ref_uuid,
+                'namespace_name'=> $namespace->namespace_name,
+                'namespace_public_key'=> $namespace->namespace_public_key,
+                'is_system'=> $namespace->is_system,
+                'created_at'=> Carbon::parse($namespace->created_at),
+                'updated_at'=> Carbon::parse($namespace->updated_at),
+                ]
             );
         }
 
