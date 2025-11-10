@@ -12,6 +12,7 @@ use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Attributes\WithTransformer;
 use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Lazy;
 use Spatie\LaravelData\Optional;
 use Spatie\LaravelData\Transformers\DateTimeInterfaceTransformer;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
@@ -23,7 +24,7 @@ class UserNamespaceData extends Data
 
     public function __construct(
 
-        public null|int|Optional $id,
+        public null|int|Optional|Lazy $id,
 
         #[OA\Property( title:"Uuid",format: 'uuid')]
         #[Uuid]
@@ -77,6 +78,7 @@ class UserNamespaceData extends Data
         if ($namespace->home_set) {
             return self::from(
                 [
+                'id'=> Lazy::create(fn() => $namespace->id),
                 'ref_uuid'=> $namespace->ref_uuid,
                 'namespace_name'=> $namespace->namespace_name,
                 'namespace_public_key'=> $namespace->namespace_public_key,
@@ -92,12 +94,13 @@ class UserNamespaceData extends Data
         } else {
             return self::from(
                 [
-                'ref_uuid'=> $namespace->ref_uuid,
-                'namespace_name'=> $namespace->namespace_name,
-                'namespace_public_key'=> $namespace->namespace_public_key,
-                'is_system'=> $namespace->is_system,
-                'created_at'=> Carbon::parse($namespace->created_at),
-                'updated_at'=> Carbon::parse($namespace->updated_at),
+                    'id'=> $namespace->id,
+                    'ref_uuid'=> $namespace->ref_uuid,
+                    'namespace_name'=> $namespace->namespace_name,
+                    'namespace_public_key'=> $namespace->namespace_public_key,
+                    'is_system'=> $namespace->is_system,
+                    'created_at'=> Carbon::parse($namespace->created_at),
+                    'updated_at'=> Carbon::parse($namespace->updated_at),
                 ]
             );
         }
