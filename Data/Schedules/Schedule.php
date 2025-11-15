@@ -43,6 +43,8 @@ class Schedule extends Data implements IResponse
      */
     public function __construct(
 
+
+
         #[Max(30),Min(3),Regex('/^\p{L}[\p{L}0-9_]{2,29}$/')]
         #[OA\Property(title: 'Name', description: 'Name of the bound',type: HexbatchResourceName::class)]
         public string|Optional $bound_name,
@@ -69,9 +71,15 @@ class Schedule extends Data implements IResponse
         #[Max(60*60*25*366),Min(1)]
         public null|Optional|int $bound_period_length ,
 
+        #[OA\Property( title: 'Created at',description: "When this was created", type: 'string', format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]
+        #[WithCast(DateTimeInterfaceCast::class, format: DATE_ATOM)]
+        #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM, setTimeZone: AttributeConstants::OUTPUT_TIMEZONE)]
+        public null|Optional|Carbon $created_at = null,
+
+
         #[Uuid]
         #[OA\Property(title: 'Schedule uuid',type: HexbatchUuid::class)]
-        public Optional|string|null $uuid = null,
+        public Optional|string|null $ref_uuid = null,
 
         #[AutoWhenLoadedLazy]
         #[OA\Property( title: 'Time spans', description: "the generated time spans", type: 'array', items: new OA\Items(type: ScheduleSpan::class))]

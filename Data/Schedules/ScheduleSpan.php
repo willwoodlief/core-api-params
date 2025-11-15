@@ -5,12 +5,15 @@ namespace App\Data\ApiParams\Data\Schedules;
 
 
 use App\Helpers\AttributeConstants;
+use App\Models\TimeBoundSpan;
 use Carbon\Carbon;
+
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Attributes\WithTransformer;
 use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
 use Spatie\LaravelData\Data;
+
 use Spatie\LaravelData\Optional;
 use Spatie\LaravelData\Transformers\DateTimeInterfaceTransformer;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
@@ -36,6 +39,16 @@ class ScheduleSpan extends Data
 
 
     ) {
+    }
+
+    /** @noinspection PhpUnused */
+    public static function fromModel(TimeBoundSpan $span) : self
+    {
+
+        return self::from([
+            'start'=> Carbon::parse($span->bound_start_ts),
+            'stop'=> Carbon::parse($span->bound_stop_ts),
+        ]);
     }
 
 
