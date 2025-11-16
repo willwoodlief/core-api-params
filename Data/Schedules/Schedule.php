@@ -81,7 +81,6 @@ class Schedule extends Data implements IResponse
         #[OA\Property(title: 'Schedule uuid',type: HexbatchUuid::class)]
         public Optional|string|null $ref_uuid = null,
 
-        #[AutoWhenLoadedLazy]
         #[OA\Property( title: 'Time spans', description: "the generated time spans", type: 'array', items: new OA\Items(type: ScheduleSpan::class))]
         public Optional|Collection|Lazy|null $time_spans = null
 
