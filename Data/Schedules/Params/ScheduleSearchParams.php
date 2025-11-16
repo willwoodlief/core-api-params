@@ -76,8 +76,7 @@ class ScheduleSearchParams extends Data
                     $info[$field] = Carbon::parse($info[$field])->toIso8601String();
                 } catch (InvalidFormatException $e) {
                     throw ValidationException::withMessages([
-                        $field => "Cannot convert $field time to iso8601: ". $e->getMessage(),
-                    ]);
+                        $field => __('msg.cannot_convert_time', ['field' => $field, 'msg' =>$e->getMessage() ])]);
                 }
             }
         }

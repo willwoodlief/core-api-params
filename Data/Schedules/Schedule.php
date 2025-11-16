@@ -17,7 +17,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\ValidationException;
 use OpenApi\Attributes as OA;
-use Spatie\LaravelData\Attributes\AutoWhenLoadedLazy;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
 use Spatie\LaravelData\Attributes\Validation\Max;
 use Spatie\LaravelData\Attributes\Validation\Min;
@@ -106,8 +105,8 @@ class Schedule extends Data implements IResponse
                 $info['bound_start'] = Carbon::parse($info['bound_start'])->toIso8601String();
             } catch (InvalidFormatException $e) {
                 throw ValidationException::withMessages([
-                    'bound_start' => "Cannot convert bound start time to iso8601: ". $e->getMessage(),
-                ]);
+                    'bound_start' => __('msg.cannot_convert_time', ['field' => 'bound_start', 'msg' =>$e->getMessage() ])]);
+
             }
         }
 
@@ -117,8 +116,7 @@ class Schedule extends Data implements IResponse
                 $info['bound_stop'] = Carbon::parse($info['bound_stop'])->toIso8601String();
             } catch (InvalidFormatException $e) {
                 throw ValidationException::withMessages([
-                    'bound_stop' => "Cannot convert bound stop time to iso8601: ". $e->getMessage(),
-                ]);
+                    'bound_stop' => __('msg.cannot_convert_time', ['field' => 'bound_stop', 'msg' =>$e->getMessage() ])]);
             }
         }
 
