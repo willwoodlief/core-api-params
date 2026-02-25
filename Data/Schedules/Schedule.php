@@ -6,6 +6,7 @@ namespace App\Data\ApiParams\Data\Schedules;
 
 use App\Data\ApiParams\Common\HexbatchUuid;
 use App\Data\ApiParams\Common\IResponse;
+use App\Data\ApiParams\Data\Namespaces\UserNamespaceData;
 use App\Data\ApiParams\OpenApi\Common\HexbatchCron;
 use App\Data\ApiParams\OpenApi\Common\HexbatchResourceName;
 use App\Data\ApiParams\Rules\ValidateCronString;
@@ -42,7 +43,15 @@ class Schedule extends Data implements IResponse
      */
     public function __construct(
 
+        /*
+        bound_cron = "1,8,32,42,51 * * * *"
+        bound_cron_timezone = "America/Chicago"
+        bound_period_length = "401"
 
+        $bound_cron
+        $bound_cron_timezone
+        $bound_period_length
+         */
 
         #[Max(30),Min(3),Regex('/^\p{L}[\p{L}0-9_]{2,29}$/')]
         #[OA\Property(title: 'Name', description: 'Name of the bound',type: HexbatchResourceName::class)]
@@ -70,9 +79,12 @@ class Schedule extends Data implements IResponse
         #[Max(60*60*25*366),Min(1)]
         public null|Optional|int $bound_period_length ,
 
+        #[OA\Property( title: "Namespace", type: UserNamespaceData::class)]
+        public UserNamespaceData|Optional|null $schedule_namespace = null,
+
         #[OA\Property( title: 'Created at',description: "When this was created", type: 'string', format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]
         #[WithCast(DateTimeInterfaceCast::class, format: DATE_ATOM)]
-        #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM, setTimeZone: AttributeConstants::OUTPUT_TIMEZONE)]
+        #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM)]
         public null|Optional|Carbon $created_at = null,
 
 
@@ -97,7 +109,9 @@ class Schedule extends Data implements IResponse
     public static function fromRequest(Request $what): Schedule
     {
         $info = $what->request->all();
-
+        if (empty($info)) {
+            $info = $what->getPayload()->all();
+        }
 
         if (($info['bound_start']??null) !== null)
         {
