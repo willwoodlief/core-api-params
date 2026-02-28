@@ -6,7 +6,6 @@ namespace App\Data\ApiParams\Data\Locations\Responses;
 use App\Data\ApiParams\Common\CursoratedMetaData;
 use App\Data\ApiParams\Common\IResponse;
 use App\Data\ApiParams\Data\Locations\Location;
-use App\Data\ApiParams\Data\Schedules\Schedule;
 use Illuminate\Support\Collection;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Data;
@@ -19,7 +18,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class LocationList extends Data implements IResponse
 {
     /**
-     * @param Collection<Schedule>|Optional $data
+     * @param Collection<Location>|Optional $data
      */
     public function __construct(
 

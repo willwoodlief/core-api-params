@@ -22,7 +22,7 @@ class LocationSearchParams extends Data
     public function __construct(
 
         #[Max(40),Min(3)]
-        #[OA\Property(title: 'Namespace',description: 'The schedule is in this namespace. Can be uuid or name.')]
+        #[OA\Property(title: 'Namespace',description: 'The location is in this namespace. Can be uuid or name.')]
         public null|string|Optional $namespace_ref = null,
 
         #[OA\Property( title: 'Cursor')]
