@@ -10,7 +10,7 @@ use App\Data\ApiParams\Common\HexbatchUuid;
 use App\Data\ApiParams\Common\IResponse;
 use App\Data\ApiParams\Data\Namespaces\UserNamespaceData;
 use App\Data\ApiParams\OpenApi\Common\HexbatchResourceName;
-use App\Enums\Bounds\TypeOfLocation;
+use App\Data\ApiParams\Enums\TypeOfLocation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
