@@ -103,12 +103,13 @@ class Location extends Data implements IResponse
         if (empty($info)) {
             $info = $what->getPayload()->all();
         }
-
-        Location::validate($info);
-
-        return  Location::factory()
+        $there =  Location::factory()
             ->withoutOptionalValues()
             ->from($info);
+
+        Location::validate($there->toArray());
+
+       return $there;
 
     }
 }
