@@ -62,7 +62,7 @@ class Location extends Data implements IResponse
 
         #[OA\Property( title: "Display", items: new OA\Items(), nullable: true)]
         #[WithCastAndTransformer(FromArrayObjectOrString::class)]
-        public ?array $location_display = null,
+        public ?array $display_json = null,
 
         #[OA\Property( title: "Shape bounding box", items: new OA\Items(), nullable: true)]
         #[WithCastAndTransformer(FromBoxToArray::class)]
