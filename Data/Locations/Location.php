@@ -78,7 +78,7 @@ class Location extends Data implements IResponse
         #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM)]
         public null|Optional|Carbon $created_at = null,
 
-        #[OA\Property( title: 'Created at',description: "When this was created", type: 'string', format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]
+        #[OA\Property( title: 'Updated at',description: "When this was created", type: 'string', format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]
         #[WithCast(DateTimeInterfaceCast::class, format: DATE_ATOM)]
         #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM)]
         public null|Optional|Carbon $updated_at = null,
