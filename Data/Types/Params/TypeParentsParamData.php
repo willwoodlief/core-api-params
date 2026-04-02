@@ -10,6 +10,7 @@ use App\Data\ApiParams\Common\IResponse;
 use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
+use Spatie\LaravelData\Attributes\Validation\Uuid;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Support\Validation\ValidationContext;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
@@ -20,17 +21,15 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
  */
 #[TypeScript]
 #[MergeValidationRules]
-#[OA\Schema(schema: 'Type Params')]
+#[OA\Schema(schema: 'Parent for type params')]
 class TypeParentsParamData extends Data implements IResponse
 {
 
 
     public function __construct(
-
-
-        #[OA\Property( title: 'Parent uuids',  type: 'array', items: new OA\Items(type: HexbatchUuid::class))]
-        /** @var string[] $parent_uuids */
-        public array $parent_uuids = []
+        #[Uuid]
+        #[OA\Property(title: 'Parent uuid',type: HexbatchUuid::class)]
+        public string|null $parent_ref_uuid
 
     ) {
 
@@ -39,9 +38,7 @@ class TypeParentsParamData extends Data implements IResponse
 
     public static function rules(ValidationContext $context): array
     {
-        return [
-            'parent_uuids.*' => ['required', 'uuid'],
-        ];
+        return [];
     }
 
 

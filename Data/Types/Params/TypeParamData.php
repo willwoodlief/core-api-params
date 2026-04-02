@@ -8,6 +8,7 @@ namespace App\Data\ApiParams\Data\Types\Params;
 use App\Data\ApiParams\Common\HexbatchUuid;
 use App\Data\ApiParams\Common\IResponse;
 use App\Data\ApiParams\OpenApi\Common\HexbatchResourceName;
+use App\Enums\Attributes\TypeOfServerAccess;
 use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
@@ -49,11 +50,11 @@ class TypeParamData extends Data implements IResponse
         public null|string|Optional $type_name,
 
 
-        #[OA\Property( title:"Is system")]
-        public bool|Optional $is_system,
-
         #[OA\Property( title:"Is final")]
         public bool|Optional $is_final_type,
+
+        #[OA\Property( title:"Access level")]
+        public TypeOfServerAccess|Optional $access
 
     ) {
 

@@ -9,6 +9,7 @@ use App\Data\ApiParams\Casts\FromBoxToArray;
 use App\Data\ApiParams\Common\HexbatchUuid;
 use App\Data\ApiParams\Common\IResponse;
 use App\Data\ApiParams\Data\Attributes\AttributeData;
+use App\Data\ApiParams\Data\Elements\ElementData;
 use App\Data\ApiParams\Data\Namespaces\UserNamespaceData;
 use App\Data\ApiParams\Data\Schedules\Schedule;
 use App\Data\ApiParams\Data\Server\ServerInformation;
@@ -52,6 +53,7 @@ class ElementTypeData extends Data implements IResponse
 
     /**
      * @param Lazy|Optional|Collection<int, AttributeData> $type_exposed_attributes
+     * @param Lazy|Optional|Collection<int, AttributeData> $type_attributes
      * @param Lazy|Optional|Collection<int, TypeParentData> $type_parents
      * @param Lazy|Optional|Collection<int, TypeParentData> $type_children
      * @param Lazy|Optional|Collection<int, TypeServerLevelData> $type_server_levels
@@ -109,27 +111,38 @@ class ElementTypeData extends Data implements IResponse
 
         #[OA\Property( title: 'Server type is from', type: ServerInformation::class)]
         #[AutoWhenLoadedLazy]
-        public ServerInformation|Lazy $type_server,
+        public ServerInformation|Optional|Lazy $type_server,
 
 
         #[OA\Property( title: "Namespace", type: UserNamespaceData::class)]
-        public UserNamespaceData|Optional $owner_namespace ,
+        #[AutoWhenLoadedLazy]
+        public UserNamespaceData|Optional|Lazy $owner_namespace ,
 
 
-        #[OA\Property( title: "Handle", type: ElementTypeData::class)]
-        public ElementTypeData|Optional $type_handle ,
+        #[OA\Property( title: "Handle", type: ElementData::class)]
+        #[AutoWhenLoadedLazy]
+        public ElementData|Optional|Lazy $type_handle ,
 
         #[OA\Property( title: "Schedule", type: Schedule::class)]
-        public Schedule|Optional $type_schedule ,
+        #[AutoWhenLoadedLazy]
+        public Schedule|Optional|Lazy $type_schedule ,
 
 
 
-        #[OA\Property( title: 'Attributes', description: "The attributes in the type", type: 'array', items: new OA\Items(type: AttributeData::class))]
+        #[OA\Property( title: 'Published attributes', description: "The attributes in the type", type: 'array', items: new OA\Items(type: AttributeData::class))]
         #[AutoWhenLoadedLazy]
         /**
          * @var AttributeData[] $type_exposed_attributes
          */
         public Collection|Optional|Lazy $type_exposed_attributes,
+
+
+        #[OA\Property( title: 'Attributes', description: "The attributes in the type", type: 'array', items: new OA\Items(type: AttributeData::class))]
+        #[AutoWhenLoadedLazy]
+        /**
+         * @var AttributeData[] $type_attributes
+         */
+        public Collection|Optional|Lazy $type_attributes,
 
 
 
