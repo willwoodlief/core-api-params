@@ -32,23 +32,23 @@ class CreateElementParamData extends Data implements IResponse
 
         #[Uuid]
         #[OA\Property(title: 'Type',description: 'The element is made from this type. Can be uuid or name',type: HexbatchUuid::class)]
-        protected ?string $type_ref = null,
+        public ?string $type_ref = null,
 
         #[Uuid]
         #[OA\Property(title: 'Namespace',
             description: 'The new elements are put into this namespace. Can be uuid or name. If missing will be put into calling namespace',
             type: HexbatchUuid::class)]
-        protected ?string $namespace_ref = null,
+        public ?string $namespace_ref = null,
 
         #[Uuid]
         #[OA\Property(title: 'Phase',
             description: 'The new elements are put into this phase. Can be uuid or name. If missing will be put into the default phase',
             type: HexbatchUuid::class)]
-        protected ?string $phase_ref = null,
+        public ?string $phase_ref = null,
 
         #[Min(1)]
         #[OA\Property(title: 'Number to create',description: 'If missing will be one.',type: HexbatchPositiveInteger::class)]
-        protected int $number_to_create
+        public int $number_to_create
 
     ) {
 

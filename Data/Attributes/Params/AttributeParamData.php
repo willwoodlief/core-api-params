@@ -60,9 +60,6 @@ class AttributeParamData extends Data implements IResponse
         public null|string|Optional $attribute_name,
 
 
-        #[OA\Property( title:"Is system",default: false)]
-        public null|bool|Optional $is_system,
-
         #[OA\Property( title:"Is final",default: false)]
         public null|bool|Optional $is_final_attribute,
 
