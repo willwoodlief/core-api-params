@@ -2,6 +2,9 @@
 
 namespace App\Data\ApiParams\Data\Namespaces;
 
+use App\Data\ApiParams\Data\Elements\ElementData;
+use App\Data\ApiParams\Data\Sets\SetData;
+use App\Data\ApiParams\Data\Types\ElementTypeData;
 use App\Data\ApiParams\OpenApi\Common\HexbatchResourceName;
 use App\Models\UserNamespace;
 use Carbon\Carbon;
@@ -42,18 +45,22 @@ class UserNamespaceData extends Data
 
         #[OA\Property( title:"Home set uuid",format: 'uuid')]
         #[Uuid]
+        /** @uses UserNamespace::homeSetUuid() */
         public Optional|string $home_set_uuid,
 
         #[OA\Property( title:"Public uuid",format: 'uuid')]
         #[Uuid]
+        /** @uses UserNamespace::publicUuid() */
         public Optional|string $public_uuid,
 
         #[OA\Property( title:"Private uuid",format: 'uuid')]
         #[Uuid]
+        /** @uses UserNamespace::privateUuid() */
         public Optional|string $private_uuid,
 
         #[OA\Property( title:"Type uuid",format: 'uuid')]
         #[Uuid]
+        /** @uses UserNamespace::typeUuid() */
         public Optional|string $type_uuid,
 
 
@@ -68,42 +75,55 @@ class UserNamespaceData extends Data
         public ?Carbon $updated_at,
 
 
+        #[OA\Property(title: 'Home set')]
+        public SetData|Lazy|Optional $home_set,
+
+        #[OA\Property(title: 'Public')]
+        public ElementData|Lazy|Optional $public_element,
+
+        #[OA\Property(title: 'Private')]
+        public ElementData|Lazy|Optional $private_element,
+
+        #[OA\Property(title: 'Type')]
+        public ElementTypeData|Lazy|Optional $namespace_base_type,
+
+
     ) {
 
     }
 
-    public static function fromModel(UserNamespace $namespace) : self
-    {
-
-        if ($namespace->home_set) {
-            return self::from(
-                [
-                'id'=> Lazy::create(fn() => $namespace->id),
-                'ref_uuid'=> $namespace->ref_uuid,
-                'namespace_name'=> $namespace->namespace_name,
-                'namespace_public_key'=> $namespace->namespace_public_key,
-                'is_system'=> $namespace->is_system,
-                'created_at'=> Carbon::parse($namespace->created_at),
-                'updated_at'=> Carbon::parse($namespace->updated_at),
-                'home_set_uuid'=> $namespace->home_set->ref_uuid,
-                'public_uuid'=> $namespace->public_element->ref_uuid,
-                'private_uuid'=> $namespace->private_element->ref_uuid,
-                'type_uuid'=> $namespace->namespace_base_type->ref_uuid
-                ]
-            );
-        } else {
-            return self::from(
-                [
-                    'id'=> $namespace->id,
-                    'ref_uuid'=> $namespace->ref_uuid,
-                    'namespace_name'=> $namespace->namespace_name,
-                    'namespace_public_key'=> $namespace->namespace_public_key,
-                    'is_system'=> $namespace->is_system,
-                    'created_at'=> Carbon::parse($namespace->created_at),
-                    'updated_at'=> Carbon::parse($namespace->updated_at),
-                ]
-            );
-        }
-
-    }
+//    public static function fromModel(UserNamespace $namespace) : self
+//    {
+//
+//        if ($namespace->home_set) {
+//            return self::from(
+//                [
+//                'id'=> Lazy::create(fn() => $namespace->id),
+//                'ref_uuid'=> $namespace->ref_uuid,
+//                'namespace_name'=> $namespace->namespace_name,
+//                'namespace_public_key'=> $namespace->namespace_public_key,
+//                'is_system'=> $namespace->is_system,
+//                'created_at'=> Carbon::parse($namespace->created_at),
+//                'updated_at'=> Carbon::parse($namespace->updated_at),
+//                'home_set_uuid'=> $namespace->home_set->ref_uuid,
+//                'public_uuid'=> $namespace->public_element->ref_uuid,
+//                'private_uuid'=> $namespace->private_element->ref_uuid,
+//                'type_uuid'=> $namespace->namespace_base_type->ref_uuid
+//                ]
+//            );
+//        } else {
+//            return self::from(
+//                [
+//                    'id'=> $namespace->id,
+//                    'ref_uuid'=> $namespace->ref_uuid,
+//                    'namespace_name'=> $namespace->namespace_name,
+//                    'namespace_public_key'=> $namespace->namespace_public_key,
+//                    'is_system'=> $namespace->is_system,
+//                    'created_at'=> Carbon::parse($namespace->created_at),
+//                    'updated_at'=> Carbon::parse($namespace->updated_at),
+//                ]
+//            );
+//        }
+//
+//    }
 }
