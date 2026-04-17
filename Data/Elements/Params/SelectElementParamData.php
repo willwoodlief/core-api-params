@@ -21,7 +21,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
  */
 #[TypeScript]
 #[MergeValidationRules]
-#[OA\Schema(schema: 'Create element')]
+#[OA\Schema(schema: 'Select elements')]
 class SelectElementParamData extends Data implements IResponse
 {
 
@@ -51,8 +51,8 @@ class SelectElementParamData extends Data implements IResponse
         public ?string $namespace_ref = null,
 
         #[Uuid]
-        #[OA\Property(title: 'Attribute',description: 'The attribute to read or write or do actions',type: HexbatchUuid::class)]
-        protected ?string $attribute_ref = null,
+        #[OA\Property(title: 'Attribute',description: 'The selected elements have this attribute',type: HexbatchUuid::class)]
+        public ?string $attribute_ref = null,
 
     ) {
 
