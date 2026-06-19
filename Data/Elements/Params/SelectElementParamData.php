@@ -12,6 +12,7 @@ use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
 use Spatie\LaravelData\Attributes\Validation\Uuid;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Optional;
 use Spatie\LaravelData\Support\Validation\ValidationContext;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
@@ -53,6 +54,9 @@ class SelectElementParamData extends Data implements IResponse
         #[Uuid]
         #[OA\Property(title: 'Attribute',description: 'The selected elements have this attribute',type: HexbatchUuid::class)]
         public ?string $attribute_ref = null,
+
+        #[OA\Property( title: 'Cursor')]
+        public Optional|null|string $cursor = null
 
     ) {
 

@@ -9,9 +9,7 @@ use App\Data\ApiParams\Common\IResponse;
 use App\Data\ApiParams\Data\Elements\ElementData;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use OpenApi\Attributes as OA;
-use Spatie\LaravelData\Attributes\AutoWhenLoadedLazy;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
 use Spatie\LaravelData\Attributes\Validation\Uuid;
 use Spatie\LaravelData\Attributes\WithCast;
@@ -26,57 +24,32 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 
 /**
- * Show details about a set
+ * Show details about a set member
  */
 #[TypeScript]
 #[MergeValidationRules]
-#[OA\Schema(schema: 'Set')]
-class SetData extends Data implements IResponse
+#[OA\Schema(schema: 'Set Member')]
+class SetMemberData extends Data implements IResponse
 {
 
 
-
-    /**
-     * @param Lazy|Optional|Collection<int, SetData> $children_sets
-     * @param Lazy|Optional|Collection<int, ElementData> $element_members
-    */
     public function __construct(
 
 
         #[Uuid]
-        #[OA\Property(title: 'Set uuid',type: HexbatchUuid::class)]
+        #[OA\Property(title: 'Member uuid',type: HexbatchUuid::class)]
         public Optional|string|null $ref_uuid ,
 
-        #[OA\Property(title: 'Defining element')]
-        public ElementData|Lazy|Optional $defining_element,
+        #[OA\Property(title: 'Element belonging to')]
+        public ElementData|Lazy|Optional   $element,
 
 
-        #[OA\Property(title: 'Has events')]
-        public bool $has_events  ,
-
-        #[OA\Property( title:"Is system")]
-        public bool|Optional $is_system,
-
-        #[OA\Property(title: 'Parent Set')]
-        public SetData|Lazy|Optional $parent_set   ,
+        #[OA\Property(title: 'Set containing this')]
+        public SetData|Lazy|Optional   $set,
 
 
-        #[OA\Property( title: 'Children sets', type: 'array', items: new OA\Items(type: SetData::class))]
-        #[AutoWhenLoadedLazy]
-        /**
-         * @var SetData[] $children_sets
-         */
-        public Collection|Optional|Lazy $children_sets,
-
-
-        #[OA\Property( title: 'Children sets', type: 'array', items: new OA\Items(type: ElementData::class))]
-        #[AutoWhenLoadedLazy]
-        /**
-         * @var ElementData[] $element_members
-         */
-        public Collection|Optional|Lazy $element_members,
-
-
+        #[OA\Property(title: 'Sticky')]
+        public bool  $is_sticky  ,
 
 
         #[OA\Property( title: 'Created at',description: "When this was created", type: 'string', format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]
@@ -107,17 +80,17 @@ class SetData extends Data implements IResponse
     }
 
 
-    public static function fromRequest(Request $what): SetData
+    public static function fromRequest(Request $what): SetMemberData
     {
         $info = $what->request->all();
         if (empty($info)) {
             $info = $what->getPayload()->all();
         }
-        $there =  SetData::factory()
+        $there =  SetMemberData::factory()
             ->withoutOptionalValues()
             ->from($info);
 
-        SetData::validate($there->toArray());
+        SetMemberData::validate($there->toArray());
 
        return $there;
 

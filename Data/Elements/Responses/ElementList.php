@@ -6,6 +6,7 @@ namespace App\Data\ApiParams\Data\Elements\Responses;
 use App\Data\ApiParams\Common\CursoratedMetaData;
 use App\Data\ApiParams\Common\IResponse;
 use App\Data\ApiParams\Data\Elements\ElementData;
+use App\Models\ElementSet;
 use Illuminate\Support\Collection;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Data;
@@ -26,7 +27,7 @@ class ElementList extends Data implements IResponse
         public Collection|Optional $data,
 
         #[OA\Property( title: 'Meta')]
-        public CursoratedMetaData $meta
+        public null|CursoratedMetaData $meta = null
 
     ) {
     }
