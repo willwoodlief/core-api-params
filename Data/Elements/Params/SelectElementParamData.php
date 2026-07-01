@@ -7,6 +7,12 @@ namespace App\Data\ApiParams\Data\Elements\Params;
 
 use App\Data\ApiParams\Common\HexbatchUuid;
 use App\Data\ApiParams\Common\IResponse;
+use App\Data\ApiParams\Rules\ValidateAttributeRef;
+use App\Data\ApiParams\Rules\ValidateElementArray;
+use App\Data\ApiParams\Rules\ValidateNamespaceRef;
+use App\Data\ApiParams\Rules\ValidatePhaseRef;
+use App\Data\ApiParams\Rules\ValidateSetRef;
+use App\Data\ApiParams\Rules\ValidateTypeRef;
 use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
@@ -74,7 +80,12 @@ class SelectElementParamData extends Data implements IResponse
     public static function rules(ValidationContext $context): array
     {
         return [
-
+            'element_refs' => new ValidateElementArray(),
+            'type_ref' => new ValidateTypeRef(),
+            'set_ref' => new ValidateSetRef(),
+            'phase_ref' => new ValidatePhaseRef(),
+            'namespace_ref' => new ValidateNamespaceRef(),
+            'attribute_ref' => new ValidateAttributeRef(),
         ];
     }
 

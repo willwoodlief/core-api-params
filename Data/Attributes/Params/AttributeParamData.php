@@ -66,6 +66,9 @@ class AttributeParamData extends Data implements IResponse
         #[OA\Property( title:"Is abstract",default: false)]
         public null|bool|Optional $is_abstract,
 
+        #[OA\Property( title:"Is element access",default: false)]
+        public null|bool|Optional $is_element_access,
+
         #[OA\Property(title: 'Access policy',default: TypeOfServerAccess::IS_PRIVATE->value)]
         public Optional|null|TypeOfServerAccess $access_policy,
 

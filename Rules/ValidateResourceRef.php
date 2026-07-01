@@ -17,7 +17,13 @@ class ValidateResourceRef implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
+        static::checkResourceName(value: $value,fail: $fail,max_size_name: static::MAX_NAME_LENGTH );
+    }
 
+    /**
+     * @param Closure(string): \Illuminate\Translation\PotentiallyTranslatedString $fail
+     */
+    public static function checkResourceName(mixed $value, Closure $fail,int $max_size_name) {
         if (!is_string($value)) {
             $fail('not a string');
             return;
@@ -25,11 +31,11 @@ class ValidateResourceRef implements ValidationRule
         if (Str::isUuid($value)) {return;}
 
         if (!preg_match('/^\p{L}[\p{L}0-9_]{2,}$/', $value) ) {
-            $fail('auth.invalid_name')->translate(['limit'=>static::MAX_NAME_LENGTH]);
+            $fail('auth.invalid_name')->translate(['limit'=>$max_size_name]);
         }
 
         if(mb_strlen($value) > static::MAX_NAME_LENGTH) {
-            $fail('auth.invalid_name')->translate(['limit'=>static::MAX_NAME_LENGTH]);
+            $fail('auth.invalid_name')->translate(['limit'=>$max_size_name]);
         }
 
         if (static::isUuidSimilar($value) ) {
@@ -43,8 +49,6 @@ class ValidateResourceRef implements ValidationRule
         if (static::positiveBoolWords($value) || static::negativeBoolWords($value)) {
             $fail('auth.not_reserved_word')->translate();
         }
-
-
     }
 
     public static function isUuidSimilar(?string $guid) : bool{
