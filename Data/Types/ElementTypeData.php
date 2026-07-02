@@ -10,19 +10,17 @@ use App\Data\ApiParams\Common\HexbatchUuid;
 use App\Data\ApiParams\Common\IResponse;
 use App\Data\ApiParams\Data\Attributes\AttributeData;
 use App\Data\ApiParams\Data\Elements\ElementData;
+use App\Data\ApiParams\Data\FromRequest;
 use App\Data\ApiParams\Data\Namespaces\UserNamespaceData;
 use App\Data\ApiParams\Data\Schedules\Schedule;
 use App\Data\ApiParams\Data\Server\ServerInformation;
 use App\Data\ApiParams\OpenApi\Common\HexbatchResourceName;
 use App\Enums\Types\TypeOfLifecycle;
-use App\Models\Attribute;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\AutoWhenLoadedLazy;
 use Spatie\LaravelData\Attributes\Computed;
-use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
 use Spatie\LaravelData\Attributes\Validation\Max;
 use Spatie\LaravelData\Attributes\Validation\Min;
@@ -49,7 +47,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class ElementTypeData extends Data implements IResponse
 {
 
-
+    use FromRequest;
 
     /**
      * @param Lazy|Optional|Collection<int, AttributeData> $type_exposed_attributes
@@ -205,19 +203,5 @@ class ElementTypeData extends Data implements IResponse
     }
 
 
-    public static function fromRequest(Request $what): ElementTypeData
-    {
-        $info = $what->request->all();
-        if (empty($info)) {
-            $info = $what->getPayload()->all();
-        }
-        $there =  ElementTypeData::factory()
-            ->withoutOptionalValues()
-            ->from($info);
 
-        ElementTypeData::validate($there->toArray());
-
-       return $there;
-
-    }
 }

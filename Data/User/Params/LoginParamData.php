@@ -5,8 +5,8 @@ namespace App\Data\ApiParams\Data\User\Params;
 
 
 use App\Data\ApiParams\Common\IResponse;
+use App\Data\ApiParams\Data\FromRequest;
 use App\Data\ApiParams\OpenApi\Common\HexbatchResourceName;
-use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
 use Spatie\LaravelData\Attributes\Validation\Max;
@@ -26,7 +26,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class LoginParamData extends Data implements IResponse
 {
 
-
+    use FromRequest;
 
     public function __construct(
 
@@ -56,19 +56,4 @@ class LoginParamData extends Data implements IResponse
     }
 
 
-    public static function fromRequest(Request $what): LoginParamData
-    {
-        $info = $what->request->all();
-        if (empty($info)) {
-            $info = $what->getPayload()->all();
-        }
-        $there =  LoginParamData::factory()
-            ->withoutOptionalValues()
-            ->from($info);
-
-        LoginParamData::validate($there->toArray());
-
-       return $there;
-
-    }
 }

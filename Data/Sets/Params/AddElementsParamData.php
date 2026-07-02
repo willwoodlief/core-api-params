@@ -7,7 +7,7 @@ namespace App\Data\ApiParams\Data\Sets\Params;
 
 use App\Data\ApiParams\Common\IResponse;
 use App\Data\ApiParams\Data\Elements\Params\SelectElementParamData;
-use Illuminate\Http\Request;
+use App\Data\ApiParams\Data\FromRequest;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
 use Spatie\LaravelData\Data;
@@ -24,7 +24,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class AddElementsParamData extends Data implements IResponse
 {
 
-
+    use FromRequest;
     public function __construct(
 
         #[OA\Property(title: 'Element selection',description: 'Any elements the namespace can see can be put into the set')]
@@ -47,19 +47,5 @@ class AddElementsParamData extends Data implements IResponse
     }
 
 
-    public static function fromRequest(Request $what): AddElementsParamData
-    {
-        $info = $what->request->all();
-        if (empty($info)) {
-            $info = $what->getPayload()->all();
-        }
-        $there =  AddElementsParamData::factory()
-            ->withoutOptionalValues()
-            ->from($info);
 
-        AddElementsParamData::validate($there->toArray());
-
-       return $there;
-
-    }
 }

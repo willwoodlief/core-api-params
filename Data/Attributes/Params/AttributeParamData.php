@@ -7,10 +7,10 @@ namespace App\Data\ApiParams\Data\Attributes\Params;
 use App\Data\ApiParams\Casts\FromArrayObjectOrString;
 use App\Data\ApiParams\Common\HexbatchUuid;
 use App\Data\ApiParams\Common\IResponse;
+use App\Data\ApiParams\Data\FromRequest;
 use App\Data\ApiParams\OpenApi\Common\HexbatchResourceName;
 use App\Enums\Attributes\TypeOfElementValuePolicy;
 use App\Enums\Attributes\TypeOfServerAccess;
-use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
 use Spatie\LaravelData\Attributes\Validation\Max;
@@ -33,7 +33,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class AttributeParamData extends Data implements IResponse
 {
 
-
+    use FromRequest;
 
     public function __construct(
 
@@ -101,19 +101,5 @@ class AttributeParamData extends Data implements IResponse
     }
 
 
-    public static function fromRequest(Request $what): AttributeParamData
-    {
-        $info = $what->request->all();
-        if (empty($info)) {
-            $info = $what->getPayload()->all();
-        }
-        $there =  AttributeParamData::factory()
-            ->withoutOptionalValues()
-            ->from($info);
 
-        AttributeParamData::validate($there->toArray());
-
-       return $there;
-
-    }
 }

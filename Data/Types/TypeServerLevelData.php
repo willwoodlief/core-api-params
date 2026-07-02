@@ -5,10 +5,10 @@ namespace App\Data\ApiParams\Data\Types;
 
 
 use App\Data\ApiParams\Common\IResponse;
+use App\Data\ApiParams\Data\FromRequest;
 use App\Data\ApiParams\Data\Server\ServerInformation;
 use App\Enums\Attributes\TypeOfServerAccess;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\AutoWhenLoadedLazy;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
@@ -32,7 +32,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class TypeServerLevelData extends Data implements IResponse
 {
 
-
+    use FromRequest;
     public function __construct(
 
         #[OA\Property(title: 'Approval')]
@@ -69,19 +69,5 @@ class TypeServerLevelData extends Data implements IResponse
     }
 
 
-    public static function fromRequest(Request $what): TypeServerLevelData
-    {
-        $info = $what->request->all();
-        if (empty($info)) {
-            $info = $what->getPayload()->all();
-        }
-        $there =  TypeServerLevelData::factory()
-            ->withoutOptionalValues()
-            ->from($info);
 
-        TypeServerLevelData::validate($there->toArray());
-
-       return $there;
-
-    }
 }

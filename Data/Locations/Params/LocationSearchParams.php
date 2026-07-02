@@ -3,8 +3,8 @@
 namespace App\Data\ApiParams\Data\Locations\Params;
 
 
+use App\Data\ApiParams\Data\FromRequest;
 use App\Data\ApiParams\Rules\ValidateResourceRef;
-use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
 use Spatie\LaravelData\Attributes\Validation\Max;
@@ -19,6 +19,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 #[OA\Schema(schema: 'LocationSearchParams')]
 class LocationSearchParams extends Data
 {
+    use FromRequest;
     public function __construct(
 
         #[Max(40),Min(3)]
@@ -39,18 +40,5 @@ class LocationSearchParams extends Data
     }
 
 
-    public static function fromRequest(Request $what): LocationSearchParams
-    {
-        $info = $what->request->all();
 
-
-
-
-        LocationSearchParams::validate($info);
-
-        return  LocationSearchParams::factory()
-            ->withoutOptionalValues()
-            ->from($info);
-
-    }
 }

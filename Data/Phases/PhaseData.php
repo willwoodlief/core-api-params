@@ -6,10 +6,10 @@ namespace App\Data\ApiParams\Data\Phases;
 
 use App\Data\ApiParams\Common\HexbatchUuid;
 use App\Data\ApiParams\Common\IResponse;
+use App\Data\ApiParams\Data\FromRequest;
 use App\Data\ApiParams\Data\Types\ElementTypeData;
 use App\Data\ApiParams\OpenApi\Common\HexbatchResourceName;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\AutoWhenLoadedLazy;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
@@ -37,6 +37,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class PhaseData extends Data implements IResponse
 {
 
+    use FromRequest;
     public function __construct(
 
         #[Uuid]
@@ -85,19 +86,5 @@ class PhaseData extends Data implements IResponse
     }
 
 
-    public static function fromRequest(Request $what): PhaseData
-    {
-        $info = $what->request->all();
-        if (empty($info)) {
-            $info = $what->getPayload()->all();
-        }
-        $there =  PhaseData::factory()
-            ->withoutOptionalValues()
-            ->from($info);
 
-        PhaseData::validate($there->toArray());
-
-       return $there;
-
-    }
 }

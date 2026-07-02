@@ -6,6 +6,7 @@ namespace App\Data\ApiParams\Data\Schedules;
 
 use App\Data\ApiParams\Common\HexbatchUuid;
 use App\Data\ApiParams\Common\IResponse;
+use App\Data\ApiParams\Data\FromRequest;
 use App\Data\ApiParams\Data\Namespaces\UserNamespaceData;
 use App\Data\ApiParams\OpenApi\Common\HexbatchCron;
 use App\Data\ApiParams\OpenApi\Common\HexbatchResourceName;
@@ -38,6 +39,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 #[OA\Schema(schema: 'Schedule')]
 class Schedule extends Data implements IResponse
 {
+    use FromRequest;
     /**
      * @param Optional|Collection|Lazy|null<int, ScheduleSpan> $time_spans
      */

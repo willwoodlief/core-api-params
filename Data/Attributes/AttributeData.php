@@ -7,6 +7,7 @@ namespace App\Data\ApiParams\Data\Attributes;
 use App\Data\ApiParams\Casts\FromArrayObjectOrString;
 use App\Data\ApiParams\Common\HexbatchUuid;
 use App\Data\ApiParams\Common\IResponse;
+use App\Data\ApiParams\Data\FromRequest;
 use App\Data\ApiParams\Data\Locations\Location;
 use App\Data\ApiParams\Data\Types\ElementTypeData;
 use App\Data\ApiParams\OpenApi\Common\HexbatchResourceName;
@@ -15,7 +16,6 @@ use App\Enums\Attributes\TypeOfElementValuePolicy;
 use App\Enums\Attributes\TypeOfServerAccess;
 use App\Enums\Types\TypeOfApproval;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\AutoWhenLoadedLazy;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
@@ -43,7 +43,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 #[OA\Schema(schema: 'Attribute')]
 class AttributeData extends Data implements IResponse
 {
-
+    use FromRequest;
 /*
  attribute_name, is_system, is_final_attribute, is_abstract, access_policy, value_policy, attribute_approval, read_json_path,
 validate_json_path, attribute_default_value,
@@ -140,19 +140,5 @@ created_at, updated_at. Parameters missing: attribute_parent, attribute_design, 
     }
 
 
-    public static function fromRequest(Request $what): AttributeData
-    {
-        $info = $what->request->all();
-        if (empty($info)) {
-            $info = $what->getPayload()->all();
-        }
-        $there =  AttributeData::factory()
-            ->withoutOptionalValues()
-            ->from($info);
 
-        AttributeData::validate($there->toArray());
-
-       return $there;
-
-    }
 }

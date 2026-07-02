@@ -3,6 +3,7 @@
 namespace App\Data\ApiParams\Data\Schedules\Params;
 
 
+use App\Data\ApiParams\Data\FromRequest;
 use App\Data\ApiParams\Rules\ValidateResourceRef;
 use App\Helpers\AttributeConstants;
 use Carbon\Carbon;
@@ -27,6 +28,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 #[OA\Schema(schema: 'ScheduleSearchParams')]
 class ScheduleSearchParams extends Data
 {
+    use FromRequest;
     public function __construct(
 
         #[Max(40),Min(3)]

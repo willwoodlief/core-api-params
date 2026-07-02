@@ -5,7 +5,6 @@ namespace App\Data\ApiParams\Data\Types\Responses;
 
 use App\Data\ApiParams\Common\CursoratedMetaData;
 use App\Data\ApiParams\Common\IResponse;
-use App\Data\ApiParams\Data\Attributes\AttributeData;
 use App\Data\ApiParams\Data\Types\ElementTypeData;
 use Illuminate\Support\Collection;
 use OpenApi\Attributes as OA;

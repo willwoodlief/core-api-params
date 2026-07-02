@@ -6,12 +6,12 @@ namespace App\Data\ApiParams\Data\Server;
 
 use App\Data\ApiParams\Common\HexbatchUuid;
 use App\Data\ApiParams\Common\IResponse;
+use App\Data\ApiParams\Data\FromRequest;
 use App\Data\ApiParams\Data\Namespaces\UserNamespaceData;
 use App\Data\ApiParams\Data\Types\ElementTypeData;
 use App\Enums\Server\TypeOfServerStatus;
 use App\Models\ElementType;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\AutoWhenLoadedLazy;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
@@ -39,6 +39,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class ServerInformation extends Data implements IResponse
 {
 
+    use FromRequest;
 
     public function __construct(
 
@@ -123,19 +124,5 @@ class ServerInformation extends Data implements IResponse
     }
 
 
-    public static function fromRequest(Request $what): ServerInformation
-    {
-        $info = $what->request->all();
-        if (empty($info)) {
-            $info = $what->getPayload()->all();
-        }
-        $there =  ServerInformation::factory()
-            ->withoutOptionalValues()
-            ->from($info);
 
-        ServerInformation::validate($there->toArray());
-
-        return $there;
-
-    }
 }

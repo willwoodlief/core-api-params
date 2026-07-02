@@ -6,8 +6,8 @@ namespace App\Data\ApiParams\Data\Types\Params;
 
 use App\Data\ApiParams\Common\HexbatchUuid;
 use App\Data\ApiParams\Common\IResponse;
+use App\Data\ApiParams\Data\FromRequest;
 use App\Data\ApiParams\OpenApi\Common\HexbatchResourceName;
-use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
 use Spatie\LaravelData\Attributes\Validation\Max;
@@ -29,7 +29,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class TypeSearchParams extends Data implements IResponse
 {
 
-
+    use FromRequest;
 
     public function __construct(
 
@@ -78,19 +78,5 @@ class TypeSearchParams extends Data implements IResponse
     }
 
 
-    public static function fromRequest(Request $what): TypeSearchParams
-    {
-        $info = $what->request->all();
-        if (empty($info)) {
-            $info = $what->getPayload()->all();
-        }
-        $there =  TypeSearchParams::factory()
-            ->withoutOptionalValues()
-            ->from($info);
 
-        TypeSearchParams::validate($there->toArray());
-
-       return $there;
-
-    }
 }

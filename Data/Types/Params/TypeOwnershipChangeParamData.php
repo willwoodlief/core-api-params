@@ -7,7 +7,7 @@ namespace App\Data\ApiParams\Data\Types\Params;
 
 use App\Data\ApiParams\Common\HexbatchUuid;
 use App\Data\ApiParams\Common\IResponse;
-use Illuminate\Http\Request;
+use App\Data\ApiParams\Data\FromRequest;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
 use Spatie\LaravelData\Attributes\Validation\Uuid;
@@ -24,7 +24,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 #[OA\Schema(schema: 'Type Ownership change params')]
 class TypeOwnershipChangeParamData extends Data implements IResponse
 {
-
+    use FromRequest;
 
     public function __construct(
 
@@ -46,19 +46,5 @@ class TypeOwnershipChangeParamData extends Data implements IResponse
     }
 
 
-    public static function fromRequest(Request $what): TypeOwnershipChangeParamData
-    {
-        $info = $what->request->all();
-        if (empty($info)) {
-            $info = $what->getPayload()->all();
-        }
-        $there =  TypeOwnershipChangeParamData::factory()
-            ->withoutOptionalValues()
-            ->from($info);
 
-        TypeOwnershipChangeParamData::validate($there->toArray());
-
-       return $there;
-
-    }
 }

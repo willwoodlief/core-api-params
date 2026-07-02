@@ -8,7 +8,7 @@ namespace App\Data\ApiParams\Data\Elements\Params;
 use App\Data\ApiParams\Common\HexbatchPositiveInteger;
 use App\Data\ApiParams\Common\HexbatchUuid;
 use App\Data\ApiParams\Common\IResponse;
-use Illuminate\Http\Request;
+use App\Data\ApiParams\Data\FromRequest;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
 use Spatie\LaravelData\Attributes\Validation\Min;
@@ -26,7 +26,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 #[OA\Schema(schema: 'Create element')]
 class CreateElementParamData extends Data implements IResponse
 {
-
+    use FromRequest;
 
     public function __construct(
 
@@ -63,19 +63,5 @@ class CreateElementParamData extends Data implements IResponse
     }
 
 
-    public static function fromRequest(Request $what): CreateElementParamData
-    {
-        $info = $what->request->all();
-        if (empty($info)) {
-            $info = $what->getPayload()->all();
-        }
-        $there =  CreateElementParamData::factory()
-            ->withoutOptionalValues()
-            ->from($info);
 
-        CreateElementParamData::validate($there->toArray());
-
-       return $there;
-
-    }
 }

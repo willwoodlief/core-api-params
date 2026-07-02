@@ -7,8 +7,8 @@ namespace App\Data\ApiParams\Data\Sets;
 use App\Data\ApiParams\Common\HexbatchUuid;
 use App\Data\ApiParams\Common\IResponse;
 use App\Data\ApiParams\Data\Elements\ElementData;
+use App\Data\ApiParams\Data\FromRequest;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\AutoWhenLoadedLazy;
@@ -34,7 +34,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class SetData extends Data implements IResponse
 {
 
-
+    use FromRequest;
 
     /**
      * @param Lazy|Optional|Collection<int, SetData> $children_sets
@@ -107,19 +107,5 @@ class SetData extends Data implements IResponse
     }
 
 
-    public static function fromRequest(Request $what): SetData
-    {
-        $info = $what->request->all();
-        if (empty($info)) {
-            $info = $what->getPayload()->all();
-        }
-        $there =  SetData::factory()
-            ->withoutOptionalValues()
-            ->from($info);
 
-        SetData::validate($there->toArray());
-
-       return $there;
-
-    }
 }

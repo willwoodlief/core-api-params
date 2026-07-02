@@ -7,8 +7,8 @@ namespace App\Data\ApiParams\Data\Sets;
 use App\Data\ApiParams\Common\HexbatchUuid;
 use App\Data\ApiParams\Common\IResponse;
 use App\Data\ApiParams\Data\Elements\ElementData;
+use App\Data\ApiParams\Data\FromRequest;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
 use Spatie\LaravelData\Attributes\Validation\Uuid;
@@ -31,7 +31,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 #[OA\Schema(schema: 'Set Member')]
 class SetMemberData extends Data implements IResponse
 {
-
+    use FromRequest;
 
     public function __construct(
 
@@ -80,19 +80,5 @@ class SetMemberData extends Data implements IResponse
     }
 
 
-    public static function fromRequest(Request $what): SetMemberData
-    {
-        $info = $what->request->all();
-        if (empty($info)) {
-            $info = $what->getPayload()->all();
-        }
-        $there =  SetMemberData::factory()
-            ->withoutOptionalValues()
-            ->from($info);
 
-        SetMemberData::validate($there->toArray());
-
-       return $there;
-
-    }
 }

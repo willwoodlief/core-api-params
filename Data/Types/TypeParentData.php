@@ -6,8 +6,8 @@ namespace App\Data\ApiParams\Data\Types;
 
 use App\Data\ApiParams\Common\HexbatchUuid;
 use App\Data\ApiParams\Common\IResponse;
+use App\Data\ApiParams\Data\FromRequest;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\AutoWhenLoadedLazy;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
@@ -32,7 +32,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class TypeParentData extends Data implements IResponse
 {
 
-
+    use FromRequest;
     public function __construct(
 
 
@@ -73,19 +73,5 @@ class TypeParentData extends Data implements IResponse
     }
 
 
-    public static function fromRequest(Request $what): TypeParentData
-    {
-        $info = $what->request->all();
-        if (empty($info)) {
-            $info = $what->getPayload()->all();
-        }
-        $there =  TypeParentData::factory()
-            ->withoutOptionalValues()
-            ->from($info);
 
-        TypeParentData::validate($there->toArray());
-
-       return $there;
-
-    }
 }

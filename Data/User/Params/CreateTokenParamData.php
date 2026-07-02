@@ -6,6 +6,7 @@ namespace App\Data\ApiParams\Data\User\Params;
 
 use App\Data\ApiParams\Casts\FromArrayObjectOrString;
 use App\Data\ApiParams\Common\IResponse;
+use App\Data\ApiParams\Data\FromRequest;
 use App\Data\ApiParams\OpenApi\Common\HexbatchSecondsToLive;
 use App\Exceptions\HexbatchNotPossibleException;
 use App\Exceptions\RefCodes;
@@ -31,7 +32,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 #[OA\Schema(schema: 'Registration')]
 class CreateTokenParamData extends Data implements IResponse
 {
-
+    use FromRequest;
     const int|float MAX_PASSTHROUGH_SIZE = 1024*20; //20k
 
     public function __construct(

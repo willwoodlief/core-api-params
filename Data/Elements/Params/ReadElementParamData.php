@@ -6,9 +6,9 @@ namespace App\Data\ApiParams\Data\Elements\Params;
 
 
 use App\Data\ApiParams\Common\IResponse;
+use App\Data\ApiParams\Data\FromRequest;
 use App\Data\ApiParams\Rules\ValidateAttributeArray;
 use App\Data\ApiParams\Rules\ValidateTypeArray;
-use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
 use Spatie\LaravelData\Data;
@@ -25,7 +25,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class ReadElementParamData extends Data implements IResponse
 {
 
-
+    use FromRequest;
     public function __construct(
 
         #[OA\Property( title: 'Element selector', type: SelectElementParamData::class)]
@@ -53,20 +53,5 @@ class ReadElementParamData extends Data implements IResponse
         ];
     }
 
-    public static function fromRequest(Request $what): static
-    {
-        $info = $what->request->all();
-        if (empty($info)) {
-            $info = $what->getPayload()->all();
-        }
-        $there =  ReadElementParamData::factory()
-            ->withoutOptionalValues()
-            ->from($info);
-
-        ReadElementParamData::validate($there->toArray());
-
-        return $there;
-
-    }
 
 }
