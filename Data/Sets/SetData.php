@@ -7,6 +7,7 @@ namespace App\Data\ApiParams\Data\Sets;
 use App\Data\ApiParams\Common\HexbatchUuid;
 use App\Data\ApiParams\Common\IResponse;
 use App\Data\ApiParams\Data\Elements\ElementData;
+use App\Data\ApiParams\Data\Elements\Responses\ElementList;
 use App\Data\ApiParams\Data\FromRequest;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -38,7 +39,7 @@ class SetData extends Data implements IResponse
 
     /**
      * @param Lazy|Optional|Collection<int, SetData> $children_sets
-     * @param Lazy|Optional|Collection<int, ElementData> $element_members
+     * @param SetMemberData|Lazy|Optional|Collection<int, ElementData> $element_members
     */
     public function __construct(
 
@@ -70,11 +71,10 @@ class SetData extends Data implements IResponse
 
 
         #[OA\Property( title: 'Children sets', type: 'array', items: new OA\Items(type: ElementData::class))]
-        #[AutoWhenLoadedLazy]
         /**
          * @var ElementData[] $element_members
          */
-        public Collection|Optional|Lazy $element_members,
+        public SetMemberData|Collection|Optional|Lazy $element_members,
 
 
 
