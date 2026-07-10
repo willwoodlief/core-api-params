@@ -23,8 +23,8 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
  */
 #[TypeScript]
 #[MergeValidationRules]
-#[OA\Schema(schema: 'Registration')]
-class RegistrationParamData extends Data implements IResponse
+#[OA\Schema(schema: 'Namespace params')]
+class NamespaceParamData extends Data implements IResponse
 {
 
     use FromRequest;
@@ -32,15 +32,19 @@ class RegistrationParamData extends Data implements IResponse
     public function __construct(
 
 
-        #[OA\Property(  title: 'Namespace',description: "The namespace name and optional public key")]
-        public NamespaceParamData $namespace,
+        #[Max(60),Min(3),Regex('/^\p{L}[\p{L}0-9_]{2,29}$/')]
+        #[OA\Property( title: 'User Name', type: HexbatchResourceName::class,
+            example: [new OA\Examples(summary: "user name example", value:'will_fart') ]
 
-        #[Min(10)]
-        #[OA\Property(  title: 'Password',type: 'string',minLength: 10,
-            example: [new OA\Examples(summary: "password set up in the registration", value:'beans_r_88good') ]
         )]
-        public string $password,
+        public string $username,
 
+
+
+        #[OA\Property(  title: 'Public key',type: 'string',minLength: 10,
+            example: [new OA\Examples(summary: "optional public key to show data later", value:'any public key') ]
+        )]
+        public Optional|string|null $public_key = null
 
     ) {
     }
