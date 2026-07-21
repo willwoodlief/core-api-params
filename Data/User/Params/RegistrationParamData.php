@@ -6,14 +6,11 @@ namespace App\Data\ApiParams\Data\User\Params;
 
 use App\Data\ApiParams\Common\IResponse;
 use App\Data\ApiParams\Data\FromRequest;
-use App\Data\ApiParams\OpenApi\Common\HexbatchResourceName;
+use App\Data\ApiParams\Data\Namespaces\Params\NamespaceParamData;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
-use Spatie\LaravelData\Attributes\Validation\Max;
 use Spatie\LaravelData\Attributes\Validation\Min;
-use Spatie\LaravelData\Attributes\Validation\Regex;
 use Spatie\LaravelData\Data;
-use Spatie\LaravelData\Optional;
 use Spatie\LaravelData\Support\Validation\ValidationContext;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 

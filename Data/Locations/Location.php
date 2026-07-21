@@ -8,12 +8,15 @@ use App\Data\ApiParams\Casts\FromArrayObjectOrString;
 use App\Data\ApiParams\Casts\FromBoxToArray;
 use App\Data\ApiParams\Common\HexbatchUuid;
 use App\Data\ApiParams\Common\IResponse;
+use App\Data\ApiParams\Data\Attributes\AttributeData;
 use App\Data\ApiParams\Data\FromRequest;
 use App\Data\ApiParams\Data\Namespaces\UserNamespaceData;
 use App\Data\ApiParams\OpenApi\Common\HexbatchResourceName;
 use App\Data\ApiParams\Enums\TypeOfLocation;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use OpenApi\Attributes as OA;
+use Spatie\LaravelData\Attributes\AutoWhenLoadedLazy;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
 use Spatie\LaravelData\Attributes\Validation\Max;
 use Spatie\LaravelData\Attributes\Validation\Min;
@@ -24,6 +27,7 @@ use Spatie\LaravelData\Attributes\WithCastAndTransformer;
 use Spatie\LaravelData\Attributes\WithTransformer;
 use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Lazy;
 use Spatie\LaravelData\Optional;
 use Spatie\LaravelData\Support\Validation\ValidationContext;
 use Spatie\LaravelData\Transformers\DateTimeInterfaceTransformer;
@@ -40,8 +44,19 @@ class Location extends Data implements IResponse
 {
 
     use FromRequest;
+
+    /**
+     * @param Lazy|Optional|Collection<int, AttributeData> $location_attributes
+     */
     public function __construct(
 
+
+        #[OA\Property( title: 'Attributes using this location', type: 'array', items: new OA\Items(type: AttributeData::class))]
+        #[AutoWhenLoadedLazy]
+        /**
+         * @var AttributeData[] $location_attributes
+         */
+        public Collection|Optional|Lazy $location_attributes,
 
         #[Max(30),Min(3),Regex('/^\p{L}[\p{L}0-9_]{2,29}$/')]
         #[OA\Property(title: 'Name', description: 'Name of the bound',type: HexbatchResourceName::class)]

@@ -5,7 +5,6 @@ namespace App\Data\ApiParams\Data\Schedules\Params;
 
 use App\Data\ApiParams\Data\FromRequest;
 use App\Data\ApiParams\Rules\ValidateResourceRef;
-use App\Helpers\AttributeConstants;
 use Carbon\Carbon;
 use Carbon\Exceptions\InvalidFormatException;
 use Illuminate\Http\Request;
@@ -38,17 +37,17 @@ class ScheduleSearchParams extends Data
 
         #[OA\Property( title: 'Scheduled before',description: "Iso 8601 datetime, to see if the schedule is before this", format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]
         #[WithCast(DateTimeInterfaceCast::class, format: DATE_ATOM)]
-        #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM, setTimeZone: AttributeConstants::OUTPUT_TIMEZONE)]
+        #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM)]
         public null|Optional|Carbon $before  = null,
 
         #[OA\Property( title: 'Scheduled before',description: "Iso 8601 datetime, to see if the schedule is after this", format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]
         #[WithCast(DateTimeInterfaceCast::class, format: DATE_ATOM)]
-        #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM, setTimeZone: AttributeConstants::OUTPUT_TIMEZONE)]
+        #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM)]
         public null|Optional|Carbon $after = null,
 
         #[OA\Property( title: 'Scheduled during',description: "Iso 8601 datetime, to see if the schedule includes this", format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]
         #[WithCast(DateTimeInterfaceCast::class, format: DATE_ATOM)]
-        #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM, setTimeZone: AttributeConstants::OUTPUT_TIMEZONE)]
+        #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM)]
         public null|Optional|Carbon $during = null,
 
 

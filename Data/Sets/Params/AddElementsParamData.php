@@ -31,7 +31,7 @@ class AddElementsParamData extends Data implements IResponse
         public SelectElementParamData $selection,
 
         #[OA\Property(title: 'Is sticky',description: 'Sticky elements are not discarded when a set is emptied')]
-        public bool                   $is_sticky = true,
+        public bool                   $is_sticky = false,
 
 
     ) {

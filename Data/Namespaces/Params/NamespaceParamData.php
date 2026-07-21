@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Data\ApiParams\Data\User\Params;
+namespace App\Data\ApiParams\Data\Namespaces\Params;
 
 
 
@@ -37,7 +37,7 @@ class NamespaceParamData extends Data implements IResponse
             example: [new OA\Examples(summary: "user name example", value:'will_fart') ]
 
         )]
-        public string $username,
+        public string               $name,
 
 
 
