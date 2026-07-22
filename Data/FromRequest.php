@@ -13,6 +13,12 @@ trait FromRequest
         if (empty($info)) {
             $info = $what->getPayload()->all();
         }
+        return static::MakingUsingCodeArray($info);
+    }
+
+    public static function MakingUsingCodeArray(array $info): static
+    {
+
         $there =  static::factory()
             ->withoutOptionalValues()
             ->from($info);
@@ -20,6 +26,5 @@ trait FromRequest
         static::validate($there->toArray());
 
         return $there;
-
     }
 }

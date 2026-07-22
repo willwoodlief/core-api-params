@@ -37,13 +37,12 @@ class AttributeParamData extends Data implements IResponse
 
     public function __construct(
 
-
         #[Uuid]
         #[OA\Property(title: 'Parent uuid',type: HexbatchUuid::class)]
         public Optional|string|null $parent_ref_uuid ,
 
         #[OA\Property(title: 'Unset Parent',description: 'When editing an existing attribute and want to remove the parent',default: false)]
-        public Optional|bool $unset_parent ,
+        public null|Optional|bool $unset_parent ,
 
 
         #[Uuid]
@@ -55,7 +54,7 @@ class AttributeParamData extends Data implements IResponse
         public Optional|string|null $location_uuid ,
 
 
-        #[Max(60),Min(3),Regex('/^\p{L}[\p{L}0-9_]{2,29}$/')]
+        #[Max(60),Min(3),Regex('/^\p{L}[\p{L}0-9_]{2,59}$/')]
         #[OA\Property(title: 'Name', description: 'Name of the attribute',type: HexbatchResourceName::class)]
         public null|string|Optional $attribute_name,
 

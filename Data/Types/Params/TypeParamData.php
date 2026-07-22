@@ -45,10 +45,9 @@ class TypeParamData extends Data implements IResponse
         public Optional|string|null $schedule_ref_uuid ,
 
 
-        #[Max(60),Min(3),Regex('/^\p{L}[\p{L}0-9_]{2,29}$/')]
+        #[Max(60),Min(3),Regex('/^\p{L}[\p{L}0-9_]{2,59}$/')]
         #[OA\Property(title: 'Name', description: 'Name of the type',type: HexbatchResourceName::class)]
         public null|string|Optional $type_name,
-
 
         #[OA\Property( title:"Is final")]
         public bool|Optional $is_final_type,
