@@ -16,6 +16,7 @@ use App\Enums\Attributes\TypeOfElementValuePolicy;
 use App\Enums\Attributes\TypeOfServerAccess;
 use App\Enums\Types\TypeOfApproval;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\AutoWhenLoadedLazy;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
@@ -44,12 +45,10 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class AttributeData extends Data implements IResponse
 {
     use FromRequest;
-/*
- attribute_name, is_system, is_final_attribute, is_abstract, access_policy, value_policy, attribute_approval, read_json_path,
-validate_json_path, attribute_default_value,
-created_at, updated_at. Parameters missing: attribute_parent, attribute_design, type_owner, attribute_location
- */
 
+    /**
+     * @param Optional|Lazy|null|Collection<int, AttributeData> $attribute_ancestors
+    */
     public function __construct(
 
 
@@ -64,13 +63,13 @@ created_at, updated_at. Parameters missing: attribute_parent, attribute_design, 
 
 
         #[OA\Property( title:"Is system")]
-        public bool|Optional $is_system,
+        public null|bool|Optional $is_system,
 
         #[OA\Property( title:"Is final")]
-        public bool|Optional $is_final_attribute,
+        public null|bool|Optional $is_final_attribute,
 
         #[OA\Property( title:"Is abstract")]
-        public bool|Optional $is_abstract,
+        public null|bool|Optional $is_abstract,
 
         #[OA\Property(title: 'Access policy')]
         public Optional|null|TypeOfServerAccess $access_policy,
@@ -106,22 +105,26 @@ created_at, updated_at. Parameters missing: attribute_parent, attribute_design, 
 
         #[OA\Property( title: 'Parent', type: AttributeData::class)]
         #[AutoWhenLoadedLazy]
-        public AttributeData|Optional|Lazy $attribute_parent,
+        public null|AttributeData|Optional|Lazy $attribute_parent,
 
+
+
+        #[OA\Property( title: 'Ancestors', description: "Ancestors", type: 'array', items: new OA\Items(type: AttributeData::class))]
+        #[AutoWhenLoadedLazy]
+        public Collection|Optional|Lazy|null $attribute_ancestors = null,
 
         #[OA\Property( title: 'Design attribute', type: AttributeData::class)]
         #[AutoWhenLoadedLazy]
-        public AttributeData|Optional|Lazy $attribute_design,
+        public null|AttributeData|Optional|Lazy $attribute_design,
 
 
         #[OA\Property( title: 'Type', type: ElementTypeData::class)]
-        #[AutoWhenLoadedLazy]
-        public ElementTypeData|Optional|Lazy $type_owner,
+        public null|ElementTypeData|Optional $type = null,
 
 
         #[OA\Property( title: 'Shape or map', type: Location::class)]
         #[AutoWhenLoadedLazy]
-        public Location|Optional|Lazy $attribute_location,
+        public null|Location|Optional|Lazy $attribute_location = null,
 
 
 

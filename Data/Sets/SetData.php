@@ -39,7 +39,7 @@ class SetData extends Data implements IResponse
 
     /**
      * @param Lazy|Optional|Collection<int, SetData> $children_sets
-     * @param SetMemberData|Lazy|Optional|Collection<int, ElementData> $element_members
+     * @param Lazy|Optional|Collection<int, ElementData> $element_members
     */
     public function __construct(
 
@@ -48,9 +48,6 @@ class SetData extends Data implements IResponse
         #[OA\Property(title: 'Set uuid',type: HexbatchUuid::class)]
         public Optional|string|null $ref_uuid ,
 
-        #[OA\Property(title: 'Defining element')]
-        public ElementData|Lazy|Optional $defining_element,
-
 
         #[OA\Property(title: 'Has events')]
         public bool $has_events  ,
@@ -58,8 +55,12 @@ class SetData extends Data implements IResponse
         #[OA\Property( title:"Is system")]
         public bool|Optional $is_system,
 
+
+        #[OA\Property(title: 'Defining element')]
+        public ElementData|Lazy|Optional|null $defining_element = null ,
+
         #[OA\Property(title: 'Parent Set')]
-        public SetData|Lazy|Optional $parent_set   ,
+        public SetData|Lazy|Optional|null $parent_set = null    ,
 
 
         #[OA\Property( title: 'Children sets', type: 'array', items: new OA\Items(type: SetData::class))]
@@ -67,14 +68,14 @@ class SetData extends Data implements IResponse
         /**
          * @var SetData[] $children_sets
          */
-        public Collection|Optional|Lazy $children_sets,
+        public Collection|Optional|Lazy|null $children_sets = null ,
 
 
         #[OA\Property( title: 'Children sets', type: 'array', items: new OA\Items(type: ElementData::class))]
         /**
          * @var ElementData[] $element_members
          */
-        public SetMemberData|Collection|Optional|Lazy $element_members,
+        public Collection|Optional|Lazy|null $element_members = null ,
 
 
 
@@ -82,12 +83,12 @@ class SetData extends Data implements IResponse
         #[OA\Property( title: 'Created at',description: "When this was created", type: 'string', format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]
         #[WithCast(DateTimeInterfaceCast::class, format: DATE_ATOM)]
         #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM)]
-        public null|Optional|Carbon $created_at,
+        public null|Optional|Carbon $created_at = null ,
 
         #[OA\Property( title: 'Updated at',description: "When this was created", type: 'string', format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]
         #[WithCast(DateTimeInterfaceCast::class, format: DATE_ATOM)]
         #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM)]
-        public null|Optional|Carbon $updated_at
+        public null|Optional|Carbon $updated_at = null
 
 
 

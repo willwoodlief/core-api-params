@@ -36,25 +36,25 @@ class TypeServerLevelData extends Data implements IResponse
     public function __construct(
 
         #[OA\Property(title: 'Approval')]
-        public Optional|null|TypeOfServerAccess $access_type,
+        public Optional|null|TypeOfServerAccess $access_type = null ,
 
         #[OA\Property( title: 'Server this is from', type: ServerInformation::class)]
         #[AutoWhenLoadedLazy]
-        public ServerInformation|Lazy $access_server,
+        public ServerInformation|Lazy|null $access_server = null ,
 
         #[OA\Property( title: 'Type this is about', type: ElementTypeData::class)]
         #[AutoWhenLoadedLazy]
-        public ElementTypeData|Lazy $type_having_access,
+        public ElementTypeData|Lazy|null $type_having_access = null ,
 
         #[OA\Property( title: 'Created at',description: "When this was created", type: 'string', format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]
         #[WithCast(DateTimeInterfaceCast::class, format: DATE_ATOM)]
         #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM)]
-        public null|Optional|Carbon $created_at,
+        public null|Optional|Carbon $created_at = null ,
 
         #[OA\Property( title: 'Updated at',description: "When this was created", type: 'string', format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]
         #[WithCast(DateTimeInterfaceCast::class, format: DATE_ATOM)]
         #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM)]
-        public null|Optional|Carbon $updated_at
+        public null|Optional|Carbon $updated_at = null
 
 
     ) {

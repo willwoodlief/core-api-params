@@ -59,11 +59,11 @@ class ServerInformation extends Data implements IResponse
         public null|string|Optional $server_name,
 
         #[OA\Property(title: 'Domain',description: "the domain of the server, no protocol or query string")]
-        #[Max(255),Min(3),Regex('/^\p{L}[\p{L}0-9_-.]{2,255}$/')]
+        #[Max(255),Min(3),Regex('/^\p{L}[\p{L}0-9_\-.]{2,255}$/')]
         public null|string|Optional $server_domain,
 
-        #[OA\Property(title: 'Domain',description: "the url of the server, no query string")]
-        #[Max(255),Min(3),Regex('/^\p{L}[\p{L}0-9_-.:/]{2,255}$/')]
+        #[OA\Property(title: 'Url',description: "the url of the server, no query string")]
+        #[Max(255),Min(3),Regex('/^\p{L}[\p{L}0-9_\-.:\/]{2,255}$/')]
         public null|string|Optional $server_url,
 
         #[OA\Property(title: 'Server version',description: "the software version")]

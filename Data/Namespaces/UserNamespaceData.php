@@ -3,13 +3,18 @@
 namespace App\Data\ApiParams\Data\Namespaces;
 
 use App\Data\ApiParams\Data\Elements\ElementData;
+use App\Data\ApiParams\Data\FromRequest;
 use App\Data\ApiParams\Data\Sets\SetData;
 use App\Data\ApiParams\Data\Types\ElementTypeData;
+use App\Data\ApiParams\Data\User\UserData;
 use App\Data\ApiParams\OpenApi\Common\HexbatchResourceName;
 use App\Models\UserNamespace;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use OpenApi\Attributes as OA;
+use Spatie\LaravelData\Attributes\AutoWhenLoadedLazy;
 use Spatie\LaravelData\Attributes\Validation\Max;
+use Spatie\LaravelData\Attributes\Validation\Present;
 use Spatie\LaravelData\Attributes\Validation\Uuid;
 use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Attributes\WithTransformer;
@@ -24,10 +29,13 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 #[OA\Schema(schema: 'Namespace')]
 class UserNamespaceData extends Data
 {
-
+    use FromRequest;
+    /**
+     * @param Lazy|null|Collection<int, NamespaceMemberData> $namespace_admins
+     * @param Lazy|null|Collection<int, NamespaceMemberData> $namespace_members
+    */
     public function __construct(
 
-        public null|int|Optional|Lazy $id,
 
         #[OA\Property( title:"Uuid",format: 'uuid')]
         #[Uuid]
@@ -45,23 +53,19 @@ class UserNamespaceData extends Data
 
         #[OA\Property( title:"Home set uuid",format: 'uuid')]
         #[Uuid]
-        /** @uses UserNamespace::homeSetUuid() */
-        public Optional|string $home_set_uuid,
+        public null|string $home_set_uuid,
 
         #[OA\Property( title:"Public uuid",format: 'uuid')]
         #[Uuid]
-        /** @uses UserNamespace::publicUuid() */
-        public Optional|string $public_uuid,
+        public null|string $public_uuid,
 
         #[OA\Property( title:"Private uuid",format: 'uuid')]
         #[Uuid]
-        /** @uses UserNamespace::privateUuid() */
-        public Optional|string $private_uuid,
+        public null|string $private_uuid,
 
         #[OA\Property( title:"Type uuid",format: 'uuid')]
         #[Uuid]
-        /** @uses UserNamespace::typeUuid() */
-        public Optional|string $type_uuid,
+        public null|string $type_uuid,
 
 
         #[OA\Property( title: 'Created', type: 'string', format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]
@@ -74,56 +78,46 @@ class UserNamespaceData extends Data
         #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM)]
         public ?Carbon $updated_at,
 
-
+        #[AutoWhenLoadedLazy]
         #[OA\Property(title: 'Home set')]
-        public SetData|Lazy|Optional $home_set,
+        public SetData|Lazy|null  $home_set,
 
+        #[AutoWhenLoadedLazy]
         #[OA\Property(title: 'Public')]
-        public ElementData|Lazy|Optional $public_element,
+        public ElementData|Lazy|null $public_element,
+//
 
+        #[AutoWhenLoadedLazy]
         #[OA\Property(title: 'Private')]
-        public ElementData|Lazy|Optional $private_element,
+        public ElementData|Lazy|null $private_element,
 
+        #[AutoWhenLoadedLazy]
         #[OA\Property(title: 'Type')]
-        public ElementTypeData|Lazy|Optional $namespace_base_type,
+        public ElementTypeData|Lazy|null $namespace_base_type,
+
+        public UserData|Optional|null $owner_user = null,
+
+        #[OA\Property( title: 'Admins', description: "People who admin this", type: 'array', items: new OA\Items(type: NamespaceMemberData::class))]
+        /**
+         * @var NamespaceMemberData[] $namespace_admins
+         */
+        public Collection|Lazy|null $namespace_admins = null,
+
+
+
+//        #[OA\Property( title: 'Members', description: "The immediate children of the type", type: 'array', items: new OA\Items(type: NamespaceMemberData::class))]
+//        /**
+//         * @var NamespaceMemberData[] $namespace_members
+//         */
+//        public Collection|Lazy|null $namespace_members = null
+
+
+
+
 
 
     ) {
 
     }
 
-//    public static function fromModel(UserNamespace $namespace) : self
-//    {
-//
-//        if ($namespace->home_set) {
-//            return self::from(
-//                [
-//                'id'=> Lazy::create(fn() => $namespace->id),
-//                'ref_uuid'=> $namespace->ref_uuid,
-//                'namespace_name'=> $namespace->namespace_name,
-//                'namespace_public_key'=> $namespace->namespace_public_key,
-//                'is_system'=> $namespace->is_system,
-//                'created_at'=> Carbon::parse($namespace->created_at),
-//                'updated_at'=> Carbon::parse($namespace->updated_at),
-//                'home_set_uuid'=> $namespace->home_set->ref_uuid,
-//                'public_uuid'=> $namespace->public_element->ref_uuid,
-//                'private_uuid'=> $namespace->private_element->ref_uuid,
-//                'type_uuid'=> $namespace->namespace_base_type->ref_uuid
-//                ]
-//            );
-//        } else {
-//            return self::from(
-//                [
-//                    'id'=> $namespace->id,
-//                    'ref_uuid'=> $namespace->ref_uuid,
-//                    'namespace_name'=> $namespace->namespace_name,
-//                    'namespace_public_key'=> $namespace->namespace_public_key,
-//                    'is_system'=> $namespace->is_system,
-//                    'created_at'=> Carbon::parse($namespace->created_at),
-//                    'updated_at'=> Carbon::parse($namespace->updated_at),
-//                ]
-//            );
-//        }
-//
-//    }
 }

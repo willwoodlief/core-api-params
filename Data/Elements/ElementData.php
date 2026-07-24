@@ -52,7 +52,7 @@ class ElementData extends Data implements IResponse
 
         #[OA\Property( title: "Type", type: ElementTypeData::class)]
         #[AutoWhenLoadedLazy]
-        public ElementTypeData|Optional|Lazy $element_parent_type ,
+        public ElementTypeData|Optional|Lazy|null $element_parent_type ,
 
         #[OA\Property( title: "Namespace", type: UserNamespaceData::class)]
         #[AutoWhenLoadedLazy]
@@ -64,7 +64,7 @@ class ElementData extends Data implements IResponse
         public ElementData|Optional|Lazy $element_phase,
 
         #[OA\Property( title: 'Data',description: "The element key value pair of attribute name, value",type: 'array',items:  new OA\Items())]
-        public array $data = []
+        public array|Optional|Lazy $data = []
 
     ) {
     }

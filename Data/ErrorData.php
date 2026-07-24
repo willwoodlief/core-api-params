@@ -8,8 +8,10 @@ use App\Data\ApiParams\Common\IResponse;
 use App\Exceptions\RefCodes;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Optional;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\MergeValidationRules;
+use Spatie\LaravelData\Attributes\Validation\Present;
 use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Attributes\WithTransformer;
 use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
@@ -55,10 +57,10 @@ class ErrorData extends Data implements IResponse
 
 
         #[OA\Property(  title: 'Error type code ',description: 'App specific code', example: 628)]
-        public null|string|int $instance,
+        public null|int $instance_code,
 
 
-
+        #[Present]
         #[OA\Property( title:"Errors",description: 'Additional errors',items: new OA\Items(type: 'string'),nullable: true)]
         /** @var string[] $other_errors */
         public array $other_errors = [],
@@ -95,7 +97,7 @@ class ErrorData extends Data implements IResponse
 
             $info['type'] = $e->getRefCodeUrl();
             $info['message'] = $e->getMessage();
-            $info['instance'] = $e->getRefCode();
+            $info['instance_code'] = $e->getRefCode();
 
 
             $other = $e->getPrevious();
@@ -118,7 +120,7 @@ class ErrorData extends Data implements IResponse
                 $sub_message .= $issues;
                 $info['other_errors'][] = $sub_message;
             }
-            $info['instance'] = RefCodes::VALIDATION;
+            $info['instance_code'] = RefCodes::VALIDATION;
 
             $other = $e->getPrevious();
             while ($other) {
@@ -137,7 +139,7 @@ class ErrorData extends Data implements IResponse
         }
         else {
             $info['status'] = CodeOf::HTTP_BAD_REQUEST;
-            $info['instance'] = $e->getCode()?:null;
+            $info['instance_code'] = $e->getCode()?:null;
             $info['message'] = $e->getMessage();
 
             $other = $e->getPrevious();

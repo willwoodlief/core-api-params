@@ -16,14 +16,14 @@ trait FromRequest
         return static::MakingUsingCodeArray($info);
     }
 
-    public static function MakingUsingCodeArray(array $info): static
+    public static function MakingUsingCodeArray(array|object $info): static
     {
 
         $there =  static::factory()
             ->withoutOptionalValues()
             ->from($info);
 
-        static::validate($there->toArray());
+        static::validate($there);
 
         return $there;
     }

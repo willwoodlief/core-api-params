@@ -60,7 +60,7 @@ class SetMemberData extends Data implements IResponse
         #[OA\Property( title: 'Updated at',description: "When this was created", type: 'string', format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]
         #[WithCast(DateTimeInterfaceCast::class, format: DATE_ATOM)]
         #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM)]
-        public null|Optional|Carbon $updated_at
+        public null|Optional|Carbon $updated_at,
 
 
 
