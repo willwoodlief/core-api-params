@@ -103,6 +103,10 @@ class AttributeData extends Data implements IResponse
         #[WithTransformer(DateTimeInterfaceTransformer::class, format: DATE_ATOM)]
         public null|Optional|Carbon $updated_at,
 
+        #[Uuid]
+        #[OA\Property(title: 'Type Uuid',type: HexbatchUuid::class)]
+        public Optional|string|null $type_uuid ,
+
         #[OA\Property( title: 'Parent', type: AttributeData::class)]
         #[AutoWhenLoadedLazy]
         public null|AttributeData|Optional|Lazy $attribute_parent,
