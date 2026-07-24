@@ -158,7 +158,13 @@ class ElementTypeData extends Data implements IResponse
              */
         public Collection|Optional|Lazy|null $type_exposed_attributes = null,
 
+        #[OA\Property( title: "Blurb")]
+        /** @uses \App\Models\ElementType::getBlurbAttribute() */
+        public ?string $blurb = null,
 
+        #[OA\Property( title: "Description")]
+        /** @uses \App\Models\ElementType::getNotesAttribute() */
+        public ?string $notes = null
 
 
     ) {

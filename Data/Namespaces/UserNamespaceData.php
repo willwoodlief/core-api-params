@@ -8,13 +8,11 @@ use App\Data\ApiParams\Data\Sets\SetData;
 use App\Data\ApiParams\Data\Types\ElementTypeData;
 use App\Data\ApiParams\Data\User\UserData;
 use App\Data\ApiParams\OpenApi\Common\HexbatchResourceName;
-use App\Models\UserNamespace;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\AutoWhenLoadedLazy;
 use Spatie\LaravelData\Attributes\Validation\Max;
-use Spatie\LaravelData\Attributes\Validation\Present;
 use Spatie\LaravelData\Attributes\Validation\Uuid;
 use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Attributes\WithTransformer;
@@ -32,7 +30,6 @@ class UserNamespaceData extends Data
     use FromRequest;
     /**
      * @param Lazy|null|Collection<int, NamespaceMemberData> $namespace_admins
-     * @param Lazy|null|Collection<int, NamespaceMemberData> $namespace_members
     */
     public function __construct(
 
@@ -103,13 +100,6 @@ class UserNamespaceData extends Data
          */
         public Collection|Lazy|null $namespace_admins = null,
 
-
-
-//        #[OA\Property( title: 'Members', description: "The immediate children of the type", type: 'array', items: new OA\Items(type: NamespaceMemberData::class))]
-//        /**
-//         * @var NamespaceMemberData[] $namespace_members
-//         */
-//        public Collection|Lazy|null $namespace_members = null
 
 
 

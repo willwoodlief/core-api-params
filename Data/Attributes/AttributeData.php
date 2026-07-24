@@ -123,21 +123,26 @@ class AttributeData extends Data implements IResponse
 
 
         #[OA\Property( title: 'Type', type: ElementTypeData::class)]
-        public null|ElementTypeData|Optional $type = null,
+        public null|ElementTypeData|Optional $type_owner = null,
 
 
         #[OA\Property( title: 'Shape or map', type: Location::class)]
         #[AutoWhenLoadedLazy]
         public null|Location|Optional|Lazy $attribute_location = null,
 
+        #[OA\Property( title: "Blurb")]
+        /** @uses \App\Models\Attribute::getBlurbAttribute() */
+        public ?string $blurb = null,
+
+        #[OA\Property( title: "Description")]
+        /** @uses \App\Models\Attribute::getNotesAttribute() */
+        public ?string $notes = null
 
 
     ) {
+
     }
 
-    #[OA\Property( title:"Full name")]
-    /** @uses \App\Models\Attribute::getFullNameAttribute() */
-    public Optional|string|null $full_name;
 
     public static function rules(ValidationContext $context): array
     {
