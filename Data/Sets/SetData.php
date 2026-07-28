@@ -18,6 +18,7 @@ use Spatie\LaravelData\Attributes\Validation\Uuid;
 use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Attributes\WithTransformer;
 use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
+use Spatie\LaravelData\CursorPaginatedDataCollection;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Lazy;
 use Spatie\LaravelData\Optional;
@@ -75,7 +76,7 @@ class SetData extends Data implements IResponse
         /**
          * @var ElementData[] $element_members
          */
-        public Collection|Optional|Lazy|null $element_members = null ,
+        public CursorPaginatedDataCollection|Collection|Optional|Lazy|null $element_members = null ,
 
 
 

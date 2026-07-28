@@ -33,8 +33,11 @@ class NamespaceMemberData extends Data
 
         #[OA\Property( title:"Member namespace uuid",format: 'uuid')]
         #[Uuid]
-        /** @uses \App\Models\UserNamespaceMember::memberNamespaceUuid() */
-        public Optional|string $member_namespace_uuid,
+        public Optional|string|null $member_namespace_uuid,
+
+        #[OA\Property( title:"Parent namespace uuid",format: 'uuid')]
+        #[Uuid]
+        public Optional|string|null $parent_namespace_uuid,
 
 
         #[OA\Property(title: 'Home set')]

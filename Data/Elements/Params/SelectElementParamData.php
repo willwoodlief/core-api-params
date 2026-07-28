@@ -37,7 +37,7 @@ class SelectElementParamData extends Data implements IResponse
 
         #[OA\Property(title: 'Elements',description: 'The elements to select. ')]
         /** @var string[] $element_refs */
-        public array $element_refs = [],
+        public array|Optional $element_refs = [],
 
 
         #[Uuid]
@@ -68,14 +68,6 @@ class SelectElementParamData extends Data implements IResponse
 
     }
 
-    public function isEmptyElementSelection() :bool {
-        if (count($this->element_refs)) {return false;}
-        if ($this->type_ref) {return false;}
-        if ($this->set_ref) {return false;}
-        if ($this->phase_ref) {return false;}
-        if ($this->namespace_ref) {return false;}
-        return true;
-    }
 
     public static function rules(ValidationContext $context): array
     {

@@ -63,8 +63,8 @@ class ElementData extends Data implements IResponse
         #[AutoWhenLoadedLazy]
         public ElementData|Optional|Lazy $element_phase,
 
-        #[OA\Property( title: 'Data',description: "The element key value pair of attribute name, value",type: 'array',items:  new OA\Items())]
-        public array|Optional|Lazy $data = []
+        #[OA\Property( title: 'Data',description: "The element key value pair of attribute name, value",type: 'array',items:  new OA\Items(ElementValData::class))]
+        public array|Optional|Lazy $data_values = []
 
     ) {
     }

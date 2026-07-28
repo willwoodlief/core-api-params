@@ -13,10 +13,10 @@ trait FromRequest
         if (empty($info)) {
             $info = $what->getPayload()->all();
         }
-        return static::MakingUsingCodeArray($info);
+        return static::makingUsingCodeArray($info);
     }
 
-    public static function MakingUsingCodeArray(array|object $info): static
+    public static function makingUsingCodeArray(array|object $info): static
     {
 
         $there =  static::factory()
