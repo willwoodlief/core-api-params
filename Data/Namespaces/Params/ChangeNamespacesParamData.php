@@ -20,7 +20,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 #[TypeScript]
 #[MergeValidationRules]
 #[OA\Schema(schema: 'Namespace params')]
-class DeleteNamespacesParamData extends Data implements IResponse
+class ChangeNamespacesParamData extends Data implements IResponse
 {
 
     use FromRequest;
@@ -32,6 +32,10 @@ class DeleteNamespacesParamData extends Data implements IResponse
         #[OA\Property( title:"Permission uuid",format: 'uuid')]
         #[Uuid]
         public Optional|string|null $permission_uuid = null,
+
+        #[OA\Property( title:"New owner uuid",format: 'uuid')]
+        #[Uuid]
+        public Optional|string|null $new_owner_user_uuid = null,
 
         #[OA\Property( title:"Transfer elements",default: false)]
         public Optional|bool|null $transfer_elements_to_default = false,

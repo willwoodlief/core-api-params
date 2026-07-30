@@ -2,6 +2,7 @@
 
 namespace App\Data\ApiParams\Data\Namespaces;
 
+use App\Data\ApiParams\Data\FromRequest;
 use Carbon\Carbon;
 use OpenApi\Attributes as OA;
 use Spatie\LaravelData\Attributes\Validation\Uuid;
@@ -18,17 +19,12 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 #[OA\Schema(schema: 'Member of namespace')]
 class NamespaceMemberData extends Data
 {
-
+    use FromRequest;
     public function __construct(
-
-        public null|int|Optional|Lazy $id,
-
-
 
 
         #[OA\Property( title:"Is admin")]
         public bool $is_admin,
-
 
 
         #[OA\Property( title:"Member namespace uuid",format: 'uuid')]
@@ -40,7 +36,7 @@ class NamespaceMemberData extends Data
         public Optional|string|null $parent_namespace_uuid,
 
 
-        #[OA\Property(title: 'Home set')]
+        #[OA\Property(title: 'Namespace of member')]
         public UserNamespaceData|Lazy|Optional|null $namespace_member = null,
 
 
