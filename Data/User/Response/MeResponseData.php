@@ -28,7 +28,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
  * Information after me
  */
 #[TypeScript]
-#[OA\Schema(schema: 'Me Response')]
+#[OA\Schema(schema: 'MeResponseData')]
 class MeResponseData extends Data implements IResponse
 {
 

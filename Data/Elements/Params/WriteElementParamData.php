@@ -22,7 +22,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
  */
 #[TypeScript]
 #[MergeValidationRules]
-#[OA\Schema(schema: 'Read elements')]
+#[OA\Schema(schema: 'Write elements')]
 class WriteElementParamData extends Data implements IResponse
 {
 

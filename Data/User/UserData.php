@@ -25,7 +25,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
  * Information after me
  */
 #[TypeScript]
-#[OA\Schema(schema: 'Me Response')]
+#[OA\Schema(schema: 'UserData')]
 class UserData extends Data implements IResponse
 {
 
@@ -33,11 +33,11 @@ class UserData extends Data implements IResponse
 
 
         #[OA\Property(title: 'User unique id',type: HexbatchUuid::class)]
-        public string $ref_uuid = '',
+        public string $ref_uuid ,
 
         #[Max(60),Min(3),Regex('/^\p{L}[\p{L}0-9_]{2,29}$/')]
         #[OA\Property(title: 'User name',type: HexbatchResourceName::class)]
-        public string $username = '',
+        public string $username ,
 
 
         #[OA\Property( title: 'Registrated at',description: "When the user was registered", type: 'string', format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]

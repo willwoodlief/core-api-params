@@ -20,13 +20,19 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
  */
 #[TypeScript]
 #[MergeValidationRules]
-#[OA\Schema(schema: 'Namespace params')]
+#[OA\Schema(schema: 'ListNamespacesParamData')]
 class ListNamespacesParamData extends Data implements IResponse
 {
 
     use FromRequest;
 
     public function __construct(
+
+        #[OA\Property( title:"I am admin of",default: false)]
+        public null|bool|Optional $is_admin,
+
+        #[OA\Property( title:"I am member of",default: false)]
+        public null|bool|Optional $is_member,
 
         #[OA\Property( title:"Base Handle uuid",format: 'uuid')]
         #[Uuid]
@@ -36,11 +42,7 @@ class ListNamespacesParamData extends Data implements IResponse
         #[Uuid]
         public Optional|string|null $link_uuid = null,
 
-        #[OA\Property( title:"I am admin of",default: false)]
-        public null|bool|Optional $is_admin,
 
-        #[OA\Property( title:"I am member of",default: false)]
-        public null|bool|Optional $is_member,
 
         #[OA\Property( title: 'Cursor')]
         public Optional|null|string $cursor = null

@@ -19,7 +19,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
  */
 #[TypeScript]
 #[MergeValidationRules]
-#[OA\Schema(schema: 'Namespace params')]
+#[OA\Schema(schema: 'NamespaceSelectionParamData')]
 class NamespaceSelectionParamData extends Data implements IResponse
 {
 

@@ -48,7 +48,7 @@ class CreateElementParamData extends Data implements IResponse
 
         #[Min(1)]
         #[OA\Property(title: 'Number to create',description: 'If missing will be one.',type: HexbatchPositiveInteger::class)]
-        public int $number_to_create
+        public int $number_to_create = 1
 
     ) {
 

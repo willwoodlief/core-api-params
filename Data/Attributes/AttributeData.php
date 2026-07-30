@@ -112,14 +112,16 @@ class AttributeData extends Data implements IResponse
         public null|AttributeData|Optional|Lazy $attribute_parent,
 
 
+        #[OA\Property( title: 'Design attribute', type: AttributeData::class)]
+        #[AutoWhenLoadedLazy]
+        public null|AttributeData|Optional|Lazy $attribute_design,
+
 
         #[OA\Property( title: 'Ancestors', description: "Ancestors", type: 'array', items: new OA\Items(type: AttributeData::class))]
         #[AutoWhenLoadedLazy]
         public Collection|Optional|Lazy|null $attribute_ancestors = null,
 
-        #[OA\Property( title: 'Design attribute', type: AttributeData::class)]
-        #[AutoWhenLoadedLazy]
-        public null|AttributeData|Optional|Lazy $attribute_design,
+
 
 
         #[OA\Property( title: 'Type', type: ElementTypeData::class)]

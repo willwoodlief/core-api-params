@@ -15,7 +15,7 @@ use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript]
-#[OA\Schema(schema: 'NamespaceList')]
+#[OA\Schema(schema: 'NamespaceMemberListData')]
 class NamespaceMemberListData extends Data implements IResponse
 {
     use FromRequest;

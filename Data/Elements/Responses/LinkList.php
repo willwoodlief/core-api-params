@@ -14,7 +14,7 @@ use Spatie\LaravelData\Optional;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript]
-#[OA\Schema(schema: 'ElementList')]
+#[OA\Schema(schema: 'LinkList')]
 class LinkList extends Data implements IResponse
 {
     /**

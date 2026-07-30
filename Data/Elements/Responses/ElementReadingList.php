@@ -12,7 +12,7 @@ use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript]
-#[OA\Schema(schema: 'ElementList')]
+#[OA\Schema(schema: 'ElementReadingList')]
 class ElementReadingList extends Data implements IResponse
 {
     /**

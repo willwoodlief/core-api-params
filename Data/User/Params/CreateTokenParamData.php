@@ -29,7 +29,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
  */
 #[TypeScript]
 #[MergeValidationRules]
-#[OA\Schema(schema: 'Registration')]
+#[OA\Schema(schema: 'CreateTokenParamData')]
 class CreateTokenParamData extends Data implements IResponse
 {
     use FromRequest;

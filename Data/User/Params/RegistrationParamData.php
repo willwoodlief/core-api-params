@@ -20,7 +20,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
  */
 #[TypeScript]
 #[MergeValidationRules]
-#[OA\Schema(schema: 'Registration')]
+#[OA\Schema(schema: 'RegistrationParamData')]
 class RegistrationParamData extends Data implements IResponse
 {
 

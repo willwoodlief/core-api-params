@@ -14,7 +14,7 @@ use Spatie\LaravelData\Optional;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript]
-#[OA\Schema(schema: 'SetMemberList')]
+#[OA\Schema(schema: 'SetList')]
 class SetList extends Data implements IResponse
 {
     /**

@@ -35,8 +35,7 @@ class ErrorData extends Data implements IResponse
     public function __construct(
 
 
-        #[OA\Property(  title: 'Type of error ', description: 'Help with the error', format: 'url')]
-        public ?string $type = null,
+
 
 
         #[OA\Property(  title: 'Error message ',description: 'Describes the problem', example: 'You have not been assigned to this project')]
@@ -59,6 +58,8 @@ class ErrorData extends Data implements IResponse
         #[OA\Property(  title: 'Error type code ',description: 'App specific code', example: 628)]
         public null|int $instance_code,
 
+        #[OA\Property(  title: 'Type of error ', description: 'Help with the error', format: 'url')]
+        public ?string $type = null,
 
         #[Present]
         #[OA\Property( title:"Errors",description: 'Additional errors',items: new OA\Items(type: 'string'),nullable: true)]

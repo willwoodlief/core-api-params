@@ -23,7 +23,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
  */
 #[TypeScript]
 #[MergeValidationRules]
-#[OA\Schema(schema: 'Namespace params')]
+#[OA\Schema(schema: 'NamespaceParamData')]
 class NamespaceParamData extends Data implements IResponse
 {
 
