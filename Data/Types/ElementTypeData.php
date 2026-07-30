@@ -11,6 +11,7 @@ use App\Data\ApiParams\Common\IResponse;
 use App\Data\ApiParams\Data\Attributes\AttributeData;
 use App\Data\ApiParams\Data\Elements\ElementData;
 use App\Data\ApiParams\Data\FromRequest;
+use App\Data\ApiParams\Data\Live\LiveRuleData;
 use App\Data\ApiParams\Data\Namespaces\UserNamespaceData;
 use App\Data\ApiParams\Data\Schedules\Schedule;
 use App\Data\ApiParams\Data\Server\ServerInformation;
@@ -51,10 +52,11 @@ class ElementTypeData extends Data implements IResponse
 
     /**
      * @param Optional|Lazy|null|Collection<int, AttributeData> $type_exposed_attributes
-     * @param Lazy|Optional|Collection<int, AttributeData> $type_attributes
-     * @param Lazy|Optional|Collection<int, TypeParentData> $type_children
+     * @param Lazy|Optional|null|Collection<int, AttributeData> $type_attributes
+     * @param Lazy|Optional|null|Collection<int, LiveRuleData> $type_live_rules
+     * @param Lazy|Optional|null|Collection<int, TypeParentData> $type_children
      * @param null|Lazy|Optional|Collection<int, TypeServerLevelData> $type_server_levels
-     * @param Lazy|Optional|Collection<int, TypeParentData> $type_parents
+     * @param Lazy|Optional|null|Collection<int, TypeParentData> $type_parents
     */
     public function __construct(
 
@@ -133,6 +135,14 @@ class ElementTypeData extends Data implements IResponse
          */
         public Collection|Optional|Lazy|null $type_attributes = null,
 
+        #[OA\Property( title: 'Live Rules', description: "Any live rules for this type", type: 'array', items: new OA\Items(type: LiveRuleData::class))]
+        #[AutoWhenLoadedLazy]
+        /**
+         * @var LiveRuleData[] $type_live_rules
+         * @uses \App\Models\ElementType::type_live_rules()
+         */
+        public Collection|Optional|Lazy|null $type_live_rules = null,
+
 
 
         #[OA\Property( title: 'Parents', description: "The parents of the type", type: 'array', items: new OA\Items(type: TypeParentData::class))]
@@ -171,7 +181,7 @@ class ElementTypeData extends Data implements IResponse
         $this->inherited_attributes = [];
         $this->defined_attributes = [];
         if ($this->type_exposed_attributes instanceof Lazy) {
-            foreach ($this->type_exposed_attributes?->toArray() as $attribute) {
+            foreach ($this->type_exposed_attributes->toArray() as $attribute) {
                 if (!isset($attribute['type_owner'])) {continue;}
                 if ($attribute['type_owner']['ref_uuid'] === $this->ref_uuid) {
                     $this->defined_attributes[] = $attribute['ref_uuid'];
