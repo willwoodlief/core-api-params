@@ -47,9 +47,6 @@ class LiveAppliedData extends Data implements IResponse
         public string                             $ref_uuid,
 
 
-        #[Uuid]
-        #[OA\Property(title: 'Element uuid',type: HexbatchUuid::class)]
-        public ?string                             $live_applied_phase_uuid,
 
         #[Uuid]
         #[OA\Property(title: 'Element uuid',type: HexbatchUuid::class)]
@@ -65,6 +62,10 @@ class LiveAppliedData extends Data implements IResponse
 
         #[OA\Property(title: 'Live rule policy')]
         public TypeOfLiveRulePolicy    $live_rule_policy ,
+
+        #[OA\Property(title: 'Is passive',
+            description: "if true, then live does not modify rules or data on the element. Its attributes can be to store meta about element, but only read/written by set group")]
+        public bool                             $is_passive,
 
         #[OA\Property( title: 'Created at',description: "When this was created", type: 'string', format: 'datetime',example: "2025-02-25T15:00:59-06:00",nullable: true)]
         #[WithCast(DateTimeInterfaceCast::class, format: DATE_ATOM)]

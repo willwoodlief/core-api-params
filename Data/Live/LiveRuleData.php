@@ -45,12 +45,31 @@ class LiveRuleData extends Data implements IResponse
         public string                             $type_owner_uuid,
 
         #[Uuid]
-        #[OA\Property(title: 'Type trigger uuid',type: HexbatchUuid::class)]
-        public string                             $type_trigger_uuid,
+        #[OA\Property(title: 'Type trigger uuid',description: 'null means apply to all elements',type: HexbatchUuid::class)]
+        public ?string                             $type_trigger_uuid,
 
         #[Uuid]
         #[OA\Property(title: 'Type about uuid',type: HexbatchUuid::class)]
         public string                             $type_target_uuid,
+
+
+
+        #[OA\Property(title: 'Is passive',
+            description: "if true, then no permission needed to apply target, but target does not modify element at all, just used in rules and meta")]
+        public bool                             $is_passive,
+
+        #[OA\Property(title: 'For child sets',
+            description: "if true, then this rule is only for child sets created or placed into the set, and not elements. Applied to definer element")]
+        public bool                             $for_child_set_definers,
+
+
+        #[OA\Property(title: 'Minimum triggers',
+            description: "Minimum triggers (each element) in set for this rule")]
+        public int                             $live_rule_min_triggers,
+
+        #[OA\Property(title: 'Minimum triggers',
+            description: "Maximum triggers (each element) in set for this rule")]
+        public int                             $live_rule_max_triggers,
 
         #[OA\Property(title: 'Live rule policy')]
         public TypeOfLiveRulePolicy    $live_rule_policy ,
